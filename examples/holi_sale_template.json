@@ -1,0 +1,914 @@
+{
+  "templateName": "RangBazaar Holi Sale 2026",
+  "templateSubject": "Happy Holi! Splash into Massive Discounts at RangBazaar!",
+  "templateFrom": "hello@rangbazaar.com",
+  "templateReplyTo": "support@rangbazaar.com",
+  "components": [
+    {
+      "id": "row-hero-banner",
+      "type": "row",
+      "props": {
+        "columns": 1,
+        "backgroundColor": "#E91E63"
+      },
+      "styles": {},
+      "parentId": null,
+      "children": [
+        {
+          "id": "col-hero-1",
+          "type": "column",
+          "props": {
+            "width": "100%",
+            "backgroundColor": "#E91E63"
+          },
+          "children": [
+            {
+              "id": "img-hero-banner",
+              "type": "image",
+              "props": {
+                "src": "https://images.unsplash.com/photo-1672093012219-490848c4c013?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
+                "alt": "Holi Colors Splash",
+                "width": "100%",
+                "height": "auto"
+              },
+              "styles": {},
+              "parentId": "col-hero-1",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "heading-hero-title",
+              "type": "heading",
+              "props": {
+                "content": "Happy Holi from RangBazaar!",
+                "level": "h1",
+                "fontSize": 32,
+                "color": "#FFFFFF",
+                "fontFamily": "Georgia, serif",
+                "textAlign": "center",
+                "padding": "20px"
+              },
+              "styles": {},
+              "parentId": "col-hero-1",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-hero-tagline",
+              "type": "text",
+              "props": {
+                "content": "Rang laga ke dekho — discounts bhi colourful hain!",
+                "fontSize": 16,
+                "color": "#FFF9C4",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "0 20px 20px 20px"
+              },
+              "styles": {},
+              "parentId": "col-hero-1",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": "row-hero-banner"
+        }
+      ],
+      "visibility": true,
+      "locked": false
+    },
+    {
+      "id": "row-offer-strip",
+      "type": "row",
+      "props": {
+        "columns": 1,
+        "backgroundColor": "#FFF8E1"
+      },
+      "styles": {},
+      "parentId": null,
+      "children": [
+        {
+          "id": "col-offer-1",
+          "type": "column",
+          "props": {
+            "width": "100%",
+            "backgroundColor": "#FFF8E1"
+          },
+          "children": [
+            {
+              "id": "heading-offer-title",
+              "type": "heading",
+              "props": {
+                "content": "FLAT 30% – 60% OFF",
+                "level": "h2",
+                "fontSize": 28,
+                "color": "#E91E63",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "20px 20px 5px 20px"
+              },
+              "styles": {},
+              "parentId": "col-offer-1",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-offer-details",
+              "type": "text",
+              "props": {
+                "content": "On Kurtas, Sarees, Ethnic Wear & More | Use Code: HOLI2026",
+                "fontSize": 14,
+                "color": "#757575",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "5px 20px 20px 20px"
+              },
+              "styles": {},
+              "parentId": "col-offer-1",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": "row-offer-strip"
+        }
+      ],
+      "visibility": true,
+      "locked": false
+    },
+    {
+      "id": "row-products-1",
+      "type": "row",
+      "props": {
+        "columns": 2,
+        "backgroundColor": "#FAFAFA"
+      },
+      "styles": {},
+      "parentId": null,
+      "children": [
+        {
+          "id": "col-product-left",
+          "type": "column",
+          "props": {
+            "width": "50%",
+            "backgroundColor": "#FFFFFF"
+          },
+          "children": [
+            {
+              "id": "img-kurta",
+              "type": "image",
+              "props": {
+                "src": "https://images.unsplash.com/photo-1768807478287-9e7953cfdca3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=400",
+                "alt": "Festive Embroidered Kurta Set",
+                "width": "100%",
+                "height": "auto"
+              },
+              "styles": {},
+              "parentId": "col-product-left",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "heading-kurta",
+              "type": "heading",
+              "props": {
+                "content": "Festive Embroidered Kurta Set",
+                "level": "h3",
+                "fontSize": 16,
+                "color": "#333333",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "10px 15px 5px 15px"
+              },
+              "styles": {},
+              "parentId": "col-product-left",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-kurta-desc",
+              "type": "text",
+              "props": {
+                "content": "Pure cotton. Mirror work. Available in 8 vibrant colours.",
+                "fontSize": 13,
+                "color": "#666666",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "0 15px 5px 15px"
+              },
+              "styles": {},
+              "parentId": "col-product-left",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-kurta-price",
+              "type": "text",
+              "props": {
+                "content": "Rs.1,299 (MRP Rs.2,599) — 50% OFF",
+                "fontSize": 16,
+                "color": "#E91E63",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "5px 15px 10px 15px"
+              },
+              "styles": {},
+              "parentId": "col-product-left",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "btn-kurta-shop",
+              "type": "button",
+              "props": {
+                "text": "Shop Now",
+                "href": "https://www.rangbazaar.com/kurtas",
+                "fontSize": 14,
+                "color": "#FFFFFF",
+                "backgroundColor": "#E91E63",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "10px 24px",
+                "borderRadius": "20px"
+              },
+              "styles": {},
+              "parentId": "col-product-left",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": "row-products-1"
+        },
+        {
+          "id": "col-product-right",
+          "type": "column",
+          "props": {
+            "width": "50%",
+            "backgroundColor": "#FFFFFF"
+          },
+          "children": [
+            {
+              "id": "img-dupatta",
+              "type": "image",
+              "props": {
+                "src": "https://images.unsplash.com/photo-1762780700690-3fbb53fcd4e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=400",
+                "alt": "Rajasthani Bandhani Dupatta",
+                "width": "100%",
+                "height": "auto"
+              },
+              "styles": {},
+              "parentId": "col-product-right",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "heading-dupatta",
+              "type": "heading",
+              "props": {
+                "content": "Rajasthani Bandhani Dupatta",
+                "level": "h3",
+                "fontSize": 16,
+                "color": "#333333",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "10px 15px 5px 15px"
+              },
+              "styles": {},
+              "parentId": "col-product-right",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-dupatta-desc",
+              "type": "text",
+              "props": {
+                "content": "Hand-tied. Vibrant hues. Lightweight georgette.",
+                "fontSize": 13,
+                "color": "#666666",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "0 15px 5px 15px"
+              },
+              "styles": {},
+              "parentId": "col-product-right",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-dupatta-price",
+              "type": "text",
+              "props": {
+                "content": "Rs.499 (MRP Rs.999) — 50% OFF",
+                "fontSize": 16,
+                "color": "#E91E63",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "5px 15px 10px 15px"
+              },
+              "styles": {},
+              "parentId": "col-product-right",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "btn-dupatta-shop",
+              "type": "button",
+              "props": {
+                "text": "Shop Now",
+                "href": "https://www.rangbazaar.com/dupattas",
+                "fontSize": 14,
+                "color": "#FFFFFF",
+                "backgroundColor": "#E91E63",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "10px 24px",
+                "borderRadius": "20px"
+              },
+              "styles": {},
+              "parentId": "col-product-right",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": "row-products-1"
+        }
+      ],
+      "visibility": true,
+      "locked": false
+    },
+    {
+      "id": "row-products-2",
+      "type": "row",
+      "props": {
+        "columns": 2,
+        "backgroundColor": "#FAFAFA"
+      },
+      "styles": {},
+      "parentId": null,
+      "children": [
+        {
+          "id": "col-product-saree",
+          "type": "column",
+          "props": {
+            "width": "50%",
+            "backgroundColor": "#FFFFFF"
+          },
+          "children": [
+            {
+              "id": "img-saree",
+              "type": "image",
+              "props": {
+                "src": "https://images.unsplash.com/photo-1768807478287-9e7953cfdca3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=400",
+                "alt": "Printed Chiffon Saree",
+                "width": "100%",
+                "height": "auto"
+              },
+              "styles": {},
+              "parentId": "col-product-saree",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "heading-saree",
+              "type": "heading",
+              "props": {
+                "content": "Printed Chiffon Saree",
+                "level": "h3",
+                "fontSize": 16,
+                "color": "#333333",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "10px 15px 5px 15px"
+              },
+              "styles": {},
+              "parentId": "col-product-saree",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-saree-desc",
+              "type": "text",
+              "props": {
+                "content": "Lightweight. Bright prints. Ready-to-drape with blouse piece.",
+                "fontSize": 13,
+                "color": "#666666",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "0 15px 5px 15px"
+              },
+              "styles": {},
+              "parentId": "col-product-saree",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-saree-price",
+              "type": "text",
+              "props": {
+                "content": "Rs.899 (MRP Rs.1,999) — 55% OFF",
+                "fontSize": 16,
+                "color": "#E91E63",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "5px 15px 10px 15px"
+              },
+              "styles": {},
+              "parentId": "col-product-saree",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "btn-saree-shop",
+              "type": "button",
+              "props": {
+                "text": "Shop Now",
+                "href": "https://www.rangbazaar.com/sarees",
+                "fontSize": 14,
+                "color": "#FFFFFF",
+                "backgroundColor": "#E91E63",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "10px 24px",
+                "borderRadius": "20px"
+              },
+              "styles": {},
+              "parentId": "col-product-saree",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": "row-products-2"
+        },
+        {
+          "id": "col-product-kids",
+          "type": "column",
+          "props": {
+            "width": "50%",
+            "backgroundColor": "#FFFFFF"
+          },
+          "children": [
+            {
+              "id": "img-kids",
+              "type": "image",
+              "props": {
+                "src": "https://images.unsplash.com/photo-1769773650757-0c92db57d9ca?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=400",
+                "alt": "Kids Festive Dhoti-Kurta",
+                "width": "100%",
+                "height": "auto"
+              },
+              "styles": {},
+              "parentId": "col-product-kids",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "heading-kids",
+              "type": "heading",
+              "props": {
+                "content": "Kids Festive Dhoti-Kurta",
+                "level": "h3",
+                "fontSize": 16,
+                "color": "#333333",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "10px 15px 5px 15px"
+              },
+              "styles": {},
+              "parentId": "col-product-kids",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-kids-desc",
+              "type": "text",
+              "props": {
+                "content": "Soft cotton. Colour-safe fabric. Perfect for little ones at Holi.",
+                "fontSize": 13,
+                "color": "#666666",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "0 15px 5px 15px"
+              },
+              "styles": {},
+              "parentId": "col-product-kids",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-kids-price",
+              "type": "text",
+              "props": {
+                "content": "Rs.599 (MRP Rs.1,299) — 54% OFF",
+                "fontSize": 16,
+                "color": "#E91E63",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "5px 15px 10px 15px"
+              },
+              "styles": {},
+              "parentId": "col-product-kids",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "btn-kids-shop",
+              "type": "button",
+              "props": {
+                "text": "Shop Now",
+                "href": "https://www.rangbazaar.com/kids",
+                "fontSize": 14,
+                "color": "#FFFFFF",
+                "backgroundColor": "#E91E63",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "10px 24px",
+                "borderRadius": "20px"
+              },
+              "styles": {},
+              "parentId": "col-product-kids",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": "row-products-2"
+        }
+      ],
+      "visibility": true,
+      "locked": false
+    },
+    {
+      "id": "row-cta-main",
+      "type": "row",
+      "props": {
+        "columns": 1,
+        "backgroundColor": "#FFFFFF"
+      },
+      "styles": {},
+      "parentId": null,
+      "children": [
+        {
+          "id": "col-cta-1",
+          "type": "column",
+          "props": {
+            "width": "100%",
+            "backgroundColor": "#FFFFFF"
+          },
+          "children": [
+            {
+              "id": "btn-cta-main",
+              "type": "button",
+              "props": {
+                "text": "Shop the Full Holi Collection",
+                "href": "https://www.rangbazaar.com/holi-sale-2026",
+                "fontSize": 18,
+                "color": "#FFFFFF",
+                "backgroundColor": "#E91E63",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "18px 40px",
+                "borderRadius": "30px"
+              },
+              "styles": {},
+              "parentId": "col-cta-1",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": "row-cta-main"
+        }
+      ],
+      "visibility": true,
+      "locked": false
+    },
+    {
+      "id": "row-tips",
+      "type": "row",
+      "props": {
+        "columns": 3,
+        "backgroundColor": "#FFFFFF"
+      },
+      "styles": {},
+      "parentId": null,
+      "children": [
+        {
+          "id": "col-tip-1",
+          "type": "column",
+          "props": {
+            "width": "33.33%",
+            "backgroundColor": "#FFF3E0"
+          },
+          "children": [
+            {
+              "id": "heading-tip-1",
+              "type": "heading",
+              "props": {
+                "content": "Start with White",
+                "level": "h3",
+                "fontSize": 14,
+                "color": "#333333",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "15px 10px 5px 10px"
+              },
+              "styles": {},
+              "parentId": "col-tip-1",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-tip-1",
+              "type": "text",
+              "props": {
+                "content": "White kurtas make colours pop! Our Holi-special whites are stain-wash friendly.",
+                "fontSize": 12,
+                "color": "#777777",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "0 10px 15px 10px"
+              },
+              "styles": {},
+              "parentId": "col-tip-1",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": "row-tips"
+        },
+        {
+          "id": "col-tip-2",
+          "type": "column",
+          "props": {
+            "width": "33.33%",
+            "backgroundColor": "#E8F5E9"
+          },
+          "children": [
+            {
+              "id": "heading-tip-2",
+              "type": "heading",
+              "props": {
+                "content": "Choose Cotton",
+                "level": "h3",
+                "fontSize": 14,
+                "color": "#333333",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "15px 10px 5px 10px"
+              },
+              "styles": {},
+              "parentId": "col-tip-2",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-tip-2",
+              "type": "text",
+              "props": {
+                "content": "Cotton breathes easy and washes clean. All our Holi picks are 100% cotton.",
+                "fontSize": 12,
+                "color": "#777777",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "0 10px 15px 10px"
+              },
+              "styles": {},
+              "parentId": "col-tip-2",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": "row-tips"
+        },
+        {
+          "id": "col-tip-3",
+          "type": "column",
+          "props": {
+            "width": "33.33%",
+            "backgroundColor": "#E3F2FD"
+          },
+          "children": [
+            {
+              "id": "heading-tip-3",
+              "type": "heading",
+              "props": {
+                "content": "Colour-Safe Fabric",
+                "level": "h3",
+                "fontSize": 14,
+                "color": "#333333",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "15px 10px 5px 10px"
+              },
+              "styles": {},
+              "parentId": "col-tip-3",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-tip-3",
+              "type": "text",
+              "props": {
+                "content": "Our festival collection uses colour-safe dyes. Play hard, wash easy!",
+                "fontSize": 12,
+                "color": "#777777",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "0 10px 15px 10px"
+              },
+              "styles": {},
+              "parentId": "col-tip-3",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": "row-tips"
+        }
+      ],
+      "visibility": true,
+      "locked": false
+    },
+    {
+      "id": "row-coupon",
+      "type": "row",
+      "props": {
+        "columns": 1,
+        "backgroundColor": "#FFFFFF"
+      },
+      "styles": {},
+      "parentId": null,
+      "children": [
+        {
+          "id": "col-coupon-1",
+          "type": "column",
+          "props": {
+            "width": "100%",
+            "backgroundColor": "#FFFFFF"
+          },
+          "children": [
+            {
+              "id": "text-coupon-label",
+              "type": "text",
+              "props": {
+                "content": "Your exclusive Holi code:",
+                "fontSize": 13,
+                "color": "#555555",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "20px 20px 10px 20px"
+              },
+              "styles": {},
+              "parentId": "col-coupon-1",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "heading-coupon-code",
+              "type": "heading",
+              "props": {
+                "content": "HOLI2026",
+                "level": "h2",
+                "fontSize": 26,
+                "color": "#E91E63",
+                "fontFamily": "monospace",
+                "textAlign": "center",
+                "padding": "10px 20px"
+              },
+              "styles": {},
+              "parentId": "col-coupon-1",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-coupon-expiry",
+              "type": "text",
+              "props": {
+                "content": "Valid till 15th March 2026 | Min. order Rs.999",
+                "fontSize": 12,
+                "color": "#999999",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "5px 20px 20px 20px"
+              },
+              "styles": {},
+              "parentId": "col-coupon-1",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": "row-coupon"
+        }
+      ],
+      "visibility": true,
+      "locked": false
+    },
+    {
+      "id": "row-footer",
+      "type": "row",
+      "props": {
+        "columns": 1,
+        "backgroundColor": "#37474F"
+      },
+      "styles": {},
+      "parentId": null,
+      "children": [
+        {
+          "id": "col-footer-1",
+          "type": "column",
+          "props": {
+            "width": "100%",
+            "backgroundColor": "#37474F"
+          },
+          "children": [
+            {
+              "id": "text-footer-help",
+              "type": "text",
+              "props": {
+                "content": "Need help? Visit our Help Centre or call +91-98765-43210",
+                "fontSize": 12,
+                "color": "#CFD8DC",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "25px 25px 8px 25px"
+              },
+              "styles": {},
+              "parentId": "col-footer-1",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-footer-social",
+              "type": "text",
+              "props": {
+                "content": "Follow us: Instagram | Facebook | Twitter | YouTube",
+                "fontSize": 12,
+                "color": "#CFD8DC",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "8px 25px"
+              },
+              "styles": {},
+              "parentId": "col-footer-1",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            },
+            {
+              "id": "text-footer-copyright",
+              "type": "text",
+              "props": {
+                "content": "2026 RangBazaar Pvt. Ltd. All rights reserved.",
+                "fontSize": 11,
+                "color": "#90A4AE",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "center",
+                "padding": "8px 25px 25px 25px"
+              },
+              "styles": {},
+              "parentId": "col-footer-1",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": "row-footer"
+        }
+      ],
+      "visibility": true,
+      "locked": false
+    }
+  ],
+  "createdAt": "2026-03-11T00:00:00.000Z"
+}

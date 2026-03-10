@@ -1,0 +1,202 @@
+{
+  "paragraph_example": {
+    "type": "paragraph",
+    "data": {
+      "text": "This is a sample paragraph widget with some text content.",
+      "timestamp": "2024-01-15T10:30:00.000Z"
+    }
+  },
+
+  "table_example": {
+    "type": "table",
+    "data": {
+      "title": "Quarterly Sales Report",
+      "columns": ["Product", "Q1", "Q2", "Q3", "Q4", "Total"],
+      "rows": [
+        ["Product A", "$12,000", "$15,000", "$18,000", "$20,000", "$65,000"],
+        ["Product B", "$8,000", "$9,500", "$11,000", "$13,500", "$42,000"],
+        ["Product C", "$5,000", "$6,200", "$7,500", "$9,000", "$27,800"],
+        ["Total", "$25,000", "$30,700", "$36,500", "$42,500", "$134,700"]
+      ],
+      "timestamp": "2024-01-15T10:30:00.000Z"
+    }
+  },
+
+  "bullets_unordered_example": {
+    "type": "bullets",
+    "data": {
+      "title": "Key Features",
+      "items": [
+        "Supports multiple widget types",
+        "Dark theme design",
+        "Redux state management",
+        "Responsive layout",
+        "File attachments support"
+      ],
+      "ordered": false,
+      "timestamp": "2024-01-15T10:30:00.000Z"
+    }
+  },
+
+  "bullets_ordered_example": {
+    "type": "bullets",
+    "data": {
+      "title": "Setup Instructions",
+      "items": [
+        "Clone the repository",
+        "Install dependencies with npm install",
+        "Run development server with npm run dev",
+        "Open browser at localhost:3000"
+      ],
+      "ordered": true,
+      "timestamp": "2024-01-15T10:30:00.000Z"
+    }
+  },
+
+  "image_example": {
+    "type": "image",
+    "data": {
+      "url": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800",
+      "alt": "Technology and innovation",
+      "caption": "Modern workspace with technology",
+      "timestamp": "2024-01-15T10:30:00.000Z"
+    }
+  },
+
+  "form_contact_example": {
+    "type": "form",
+    "data": {
+      "title": "Contact Form",
+      "fields": [
+        {
+          "name": "name",
+          "label": "Full Name",
+          "type": "text",
+          "placeholder": "Enter your full name",
+          "required": true
+        },
+        {
+          "name": "email",
+          "label": "Email Address",
+          "type": "email",
+          "placeholder": "your.email@example.com",
+          "required": true
+        },
+        {
+          "name": "phone",
+          "label": "Phone Number",
+          "type": "tel",
+          "placeholder": "+1 (555) 000-0000",
+          "required": false
+        },
+        {
+          "name": "category",
+          "label": "Inquiry Type",
+          "type": "select",
+          "required": true,
+          "options": [
+            { "label": "General Inquiry", "value": "general" },
+            { "label": "Technical Support", "value": "support" },
+            { "label": "Sales", "value": "sales" },
+            { "label": "Feedback", "value": "feedback" }
+          ]
+        },
+        {
+          "name": "message",
+          "label": "Your Message",
+          "type": "textarea",
+          "placeholder": "Type your message here...",
+          "required": true
+        },
+        {
+          "name": "newsletter",
+          "label": "Subscribe to newsletter",
+          "type": "checkbox",
+          "required": false
+        }
+      ],
+      "submitLabel": "Send Message",
+      "timestamp": "2024-01-15T10:30:00.000Z"
+    }
+  },
+
+  "form_survey_example": {
+    "type": "form",
+    "data": {
+      "title": "User Satisfaction Survey",
+      "fields": [
+        {
+          "name": "satisfaction",
+          "label": "How satisfied are you with our service?",
+          "type": "radio",
+          "required": true,
+          "options": [
+            { "label": "Very Satisfied", "value": "5" },
+            { "label": "Satisfied", "value": "4" },
+            { "label": "Neutral", "value": "3" },
+            { "label": "Dissatisfied", "value": "2" },
+            { "label": "Very Dissatisfied", "value": "1" }
+          ]
+        },
+        {
+          "name": "recommendation",
+          "label": "Would you recommend us to others?",
+          "type": "radio",
+          "required": true,
+          "options": [
+            { "label": "Yes", "value": "yes" },
+            { "label": "No", "value": "no" },
+            { "label": "Maybe", "value": "maybe" }
+          ]
+        },
+        {
+          "name": "comments",
+          "label": "Additional Comments",
+          "type": "textarea",
+          "placeholder": "Share your thoughts...",
+          "required": false
+        }
+      ],
+      "submitLabel": "Submit Survey",
+      "timestamp": "2024-01-15T10:30:00.000Z"
+    }
+  },
+
+  "multi_widget_response": {
+    "widgets": [
+      {
+        "type": "paragraph",
+        "data": {
+          "text": "Here's a comprehensive overview of your request:",
+          "timestamp": "2024-01-15T10:30:00.000Z"
+        }
+      },
+      {
+        "type": "bullets",
+        "data": {
+          "title": "Summary Points",
+          "items": [
+            "All systems are operational",
+            "No critical issues detected",
+            "Performance metrics within normal range"
+          ],
+          "ordered": false,
+          "timestamp": "2024-01-15T10:30:00.000Z"
+        }
+      },
+      {
+        "type": "table",
+        "data": {
+          "title": "System Status",
+          "columns": ["Service", "Status", "Uptime", "Last Check"],
+          "rows": [
+            ["API Server", "✓ Online", "99.9%", "2 min ago"],
+            ["Database", "✓ Online", "99.8%", "1 min ago"],
+            ["Cache", "✓ Online", "100%", "30 sec ago"]
+          ],
+          "timestamp": "2024-01-15T10:30:00.000Z"
+        }
+      }
+    ]
+  }
+}

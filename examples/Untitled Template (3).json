@@ -1,0 +1,171 @@
+{
+  "templateName": "Untitled Template",
+  "templateSubject": "",
+  "templateFrom": "",
+  "templateReplyTo": "",
+  "components": [
+    {
+      "id": "a14e7cc8-f14b-4fc0-b1e7-8b8707c4a596",
+      "type": "row",
+      "props": {
+        "columns": 1
+      },
+      "parentId": null,
+      "children": [
+        {
+          "id": "53af1f2d-5c8e-4c12-a3b7-17e8c7a991ed",
+          "type": "column",
+          "props": {
+            "width": "100%"
+          },
+          "children": [
+            {
+              "id": "6f78cf5c-e417-4c49-b611-80d118583f56",
+              "type": "text",
+              "props": {
+                "content": "Enter your text here...",
+                "fontSize": 14,
+                "color": "#000000",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "left",
+                "padding": "10px"
+              },
+              "styles": {},
+              "parentId": "53af1f2d-5c8e-4c12-a3b7-17e8c7a991ed",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": null
+        }
+      ],
+      "visibility": true,
+      "locked": false
+    },
+    {
+      "id": "0321f815-09f1-40dd-8862-03c2acb7309d",
+      "type": "heading",
+      "props": {
+        "content": "Heading Text",
+        "level": "h2",
+        "fontSize": 24,
+        "color": "#000000",
+        "fontFamily": "Arial, sans-serif",
+        "textAlign": "left",
+        "padding": "10px"
+      },
+      "styles": {},
+      "parentId": null,
+      "children": [],
+      "visibility": true,
+      "locked": false
+    },
+    {
+      "id": "fa1a693f-e2e4-441d-8202-a53085b0dc6d",
+      "type": "row",
+      "props": {
+        "columns": 3
+      },
+      "styles": {},
+      "children": [
+        {
+          "id": "1425f946-e750-4676-8c4d-e3b918ec0c2a",
+          "type": "column",
+          "props": {
+            "width": "33.33%"
+          },
+          "children": [
+            {
+              "id": "f45c27b3-8916-414e-9a8a-4a2cc8dfa91b",
+              "type": "text",
+              "props": {
+                "content": "Enter your text here...",
+                "fontSize": 14,
+                "color": "#000000",
+                "fontFamily": "Arial, sans-serif",
+                "textAlign": "left",
+                "padding": "10px"
+              },
+              "styles": {},
+              "parentId": "1425f946-e750-4676-8c4d-e3b918ec0c2a",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": null
+        },
+        {
+          "id": "196546e4-d6bb-415a-90ec-94470b70b636",
+          "type": "column",
+          "props": {
+            "width": "33.33%"
+          },
+          "children": [],
+          "parentId": null
+        },
+        {
+          "id": "c836beb8-faad-46cf-bd8f-bbb8f7d81775",
+          "type": "column",
+          "props": {
+            "width": "33.33%"
+          },
+          "children": [],
+          "parentId": null
+        }
+      ],
+      "parentId": null,
+      "visibility": true,
+      "locked": false
+    },
+    {
+      "id": "dfc04222-1a48-4c5d-8af7-42d20810c92e",
+      "type": "row",
+      "props": {
+        "columns": 2
+      },
+      "styles": {},
+      "children": [
+        {
+          "id": "fa6311ed-a3e1-45f9-94f1-694531af0bc6",
+          "type": "column",
+          "props": {
+            "width": "50%"
+          },
+          "children": [],
+          "parentId": null
+        },
+        {
+          "id": "55077bd7-9547-467e-9779-9d09c8758472",
+          "type": "column",
+          "props": {
+            "width": "50%"
+          },
+          "children": [
+            {
+              "id": "63ad1d50-e3e4-4b2b-826f-c5adbd3c2c93",
+              "type": "image",
+              "props": {
+                "src": "https://images.unsplash.com/photo-1761839271800-f44070ff0eb9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4MzA1MTl8MXwxfGFsbHwxfHx8fHx8fHwxNzY5NTIwMDc2fA&ixlib=rb-4.1.0&q=80&w=1080",
+                "alt": "Image",
+                "width": "100%",
+                "height": "auto"
+              },
+              "styles": {},
+              "parentId": "55077bd7-9547-467e-9779-9d09c8758472",
+              "children": [],
+              "visibility": true,
+              "locked": false
+            }
+          ],
+          "parentId": null
+        }
+      ],
+      "parentId": null,
+      "visibility": true,
+      "locked": false
+    }
+  ],
+  "createdAt": "2026-03-10T18:50:27.847Z"
+}
