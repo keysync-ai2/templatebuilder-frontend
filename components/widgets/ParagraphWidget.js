@@ -1,13 +1,47 @@
 'use client';
 
+import ReactMarkdown from 'react-markdown';
+
 export default function ParagraphWidget({ data }) {
   const { text } = data;
 
   return (
     <div className="glass rounded-2xl rounded-tl-md px-4 py-3">
-      <p className="text-gray-200 text-sm whitespace-pre-wrap leading-relaxed">
-        {text}
-      </p>
+      <div className="prose-chat text-sm leading-relaxed">
+        <ReactMarkdown
+          components={{
+            p: ({ children }) => <p className="text-gray-200 mb-3 last:mb-0">{children}</p>,
+            strong: ({ children }) => <strong className="text-white font-semibold">{children}</strong>,
+            em: ({ children }) => <em className="text-gray-300">{children}</em>,
+            h1: ({ children }) => <h1 className="text-lg font-semibold text-white mb-2 mt-3 first:mt-0">{children}</h1>,
+            h2: ({ children }) => <h2 className="text-base font-semibold text-white mb-2 mt-3 first:mt-0">{children}</h2>,
+            h3: ({ children }) => <h3 className="text-sm font-semibold text-white mb-1.5 mt-2.5 first:mt-0">{children}</h3>,
+            ul: ({ children }) => <ul className="list-disc list-inside text-gray-300 mb-3 space-y-1">{children}</ul>,
+            ol: ({ children }) => <ol className="list-decimal list-inside text-gray-300 mb-3 space-y-1">{children}</ol>,
+            li: ({ children }) => <li className="text-gray-300">{children}</li>,
+            code: ({ inline, children }) =>
+              inline ? (
+                <code className="px-1.5 py-0.5 bg-gray-800 text-cyan-300 text-xs rounded-md font-mono">{children}</code>
+              ) : (
+                <pre className="bg-gray-900/80 border border-gray-700/50 rounded-xl p-3 mb-3 overflow-x-auto">
+                  <code className="text-cyan-300 text-xs font-mono">{children}</code>
+                </pre>
+              ),
+            pre: ({ children }) => <>{children}</>,
+            a: ({ href, children }) => (
+              <a href={href} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2 transition-colors">
+                {children}
+              </a>
+            ),
+            blockquote: ({ children }) => (
+              <blockquote className="border-l-2 border-cyan-500/30 pl-3 my-2 text-gray-400 italic">{children}</blockquote>
+            ),
+            hr: () => <hr className="border-gray-700/50 my-3" />,
+          }}
+        >
+          {text}
+        </ReactMarkdown>
+      </div>
     </div>
   );
 }
