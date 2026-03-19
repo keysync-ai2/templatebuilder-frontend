@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { fetchMe } from '@/store/slices/authSlice';
 import { loadTemplate } from '@/store/slices/emailBuilderSlice';
+import Header from '@/components/layout/Header';
 import * as api from '@/lib/api';
 
 export default function TemplatesPage() {
@@ -81,11 +82,6 @@ export default function TemplatesPage() {
     }
   }
 
-  function handleLogout() {
-    api.logout();
-    router.push('/auth/login');
-  }
-
   if (!initialized || !user) {
     return (
       <div className="flex items-center justify-center h-screen bg-gray-950">
@@ -95,23 +91,11 @@ export default function TemplatesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
-      {/* Header */}
-      <header className="border-b border-gray-800 px-6 py-4 flex items-center justify-between">
-        <h1 className="text-xl font-bold">Template Builder</h1>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-400">{user.email}</span>
-          <button
-            onClick={handleLogout}
-            className="text-sm text-gray-400 hover:text-white transition-colors"
-          >
-            Sign out
-          </button>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gray-950 text-white flex flex-col">
+      <Header />
 
       {/* Content */}
-      <div className="max-w-6xl mx-auto px-6 py-8">
+      <div className="max-w-6xl mx-auto px-6 py-8 w-full flex-1 overflow-auto">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-semibold">My Templates</h2>
           <button
