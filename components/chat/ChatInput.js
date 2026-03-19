@@ -1,11 +1,21 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export default function ChatInput({ onSend, disabled }) {
   const [message, setMessage] = useState('');
   const [attachments, setAttachments] = useState([]);
+  const [isFocused, setIsFocused] = useState(false);
   const fileInputRef = useRef(null);
+  const textareaRef = useRef(null);
+
+  // Auto-resize textarea
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = '24px';
+    el.style.height = Math.min(el.scrollHeight, 160) + 'px';
+  }, [message]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,77 +48,96 @@ export default function ChatInput({ onSend, disabled }) {
     setAttachments(prev => prev.filter((_, i) => i !== index));
   };
 
+  const hasContent = message.trim() || attachments.length > 0;
+
   return (
-    <div className="border-t border-gray-800 bg-gray-900 p-4">
-      {attachments.length > 0 && (
-        <div className="mb-2 flex flex-wrap gap-2">
-          {attachments.map((attachment, index) => (
-            <div
-              key={index}
-              className="flex items-center gap-2 bg-gray-800 rounded-lg px-3 py-2 text-sm"
-            >
-              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-              </svg>
-              <span className="text-gray-300">{attachment.name}</span>
-              <button
-                onClick={() => removeAttachment(index)}
-                className="text-gray-500 hover:text-red-500"
+    <div className="p-4 pb-5">
+      <div className="max-w-3xl mx-auto">
+        {/* Attachments */}
+        {attachments.length > 0 && (
+          <div className="mb-2 flex flex-wrap gap-2">
+            {attachments.map((attachment, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-2 glass rounded-lg px-3 py-1.5 text-xs"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg className="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                 </svg>
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
+                <span className="text-gray-300">{attachment.name}</span>
+                <button
+                  onClick={() => removeAttachment(index)}
+                  className="text-gray-500 hover:text-red-400 transition-colors"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
 
-      <form onSubmit={handleSubmit} className="flex gap-3">
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileSelect}
-          className="hidden"
-          multiple
-        />
-
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          disabled={disabled}
-          className="flex-shrink-0 w-12 h-12 flex items-center justify-center text-gray-400 hover:text-gray-200 hover:bg-gray-800 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Attach file"
+        {/* Input bar */}
+        <form
+          onSubmit={handleSubmit}
+          className={`flex items-end gap-2 glass rounded-2xl px-3 py-2.5 transition-all duration-300 ${
+            isFocused ? 'border-cyan-500/30 shadow-lg shadow-cyan-500/5' : ''
+          }`}
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-          </svg>
-        </button>
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileSelect}
+            className="hidden"
+            multiple
+          />
 
-        <div className="flex-1">
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={disabled}
+            className="shrink-0 p-2 text-gray-500 hover:text-gray-300 rounded-lg hover:bg-white/5 transition-colors disabled:opacity-30"
+            aria-label="Attach file"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+            </svg>
+          </button>
+
           <textarea
+            ref={textareaRef}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Type your message... (Shift+Enter for new line)"
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            placeholder="Describe the email template you want..."
             disabled={disabled}
             rows={1}
-            style={{ height: '48px', minHeight: '48px' }}
-            className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none max-h-32 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+            className="flex-1 bg-transparent text-gray-100 text-sm placeholder-gray-600 focus:outline-none resize-none py-1.5 leading-relaxed disabled:opacity-30 max-h-40"
           />
-        </div>
 
-        <button
-          type="submit"
-          disabled={disabled || (!message.trim() && attachments.length === 0)}
-          className="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Send message"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-          </svg>
-        </button>
-      </form>
+          <button
+            type="submit"
+            disabled={disabled || !hasContent}
+            className={`shrink-0 p-2.5 rounded-xl transition-all duration-300 ${
+              hasContent
+                ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-md shadow-cyan-500/15 hover:shadow-cyan-500/25'
+                : 'text-gray-600'
+            } disabled:opacity-30`}
+            aria-label="Send message"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+            </svg>
+          </button>
+        </form>
+
+        <p className="text-[10px] text-gray-700 text-center mt-2">
+          Press Enter to send, Shift+Enter for new line
+        </p>
+      </div>
     </div>
   );
 }

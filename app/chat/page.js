@@ -5,20 +5,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import Sidebar from '@/components/layout/Sidebar';
-import RightPanel from '@/components/layout/RightPanel';
 import ChatArea from '@/components/chat/ChatArea';
 import ChatInput from '@/components/chat/ChatInput';
 import { createConversation, addMessage, setLoading } from '@/store/slices/chatSlice';
 import { fetchMe } from '@/store/slices/authSlice';
 import * as api from '@/lib/api';
 
-export default function Home() {
+export default function ChatPage() {
   const dispatch = useDispatch();
   const router = useRouter();
   const { currentConversationId, conversations } = useSelector((state) => state.chat);
   const { user, initialized } = useSelector((state) => state.auth);
 
-  // Auth check
   useEffect(() => {
     const token = api.getAccessToken();
     if (!token) {
@@ -31,7 +29,6 @@ export default function Home() {
   }, [initialized, dispatch, router]);
 
   useEffect(() => {
-    // Create initial conversation if none exists
     if (conversations.length === 0) {
       dispatch(createConversation({
         id: Date.now().toString(),
@@ -43,7 +40,6 @@ export default function Home() {
   const handleSendMessage = async (messageData) => {
     if (!currentConversationId) return;
 
-    // Add user message to UI
     dispatch(addMessage({
       conversationId: currentConversationId,
       message: {
@@ -56,52 +52,31 @@ export default function Home() {
     dispatch(setLoading(true));
 
     try {
-      // Call the real chat API
-      const result = await api.sendChatMessage(
-        messageData.text,
-        null, // conversation_id — let backend create/manage
-      );
+      const result = await api.sendChatMessage(messageData.text, null);
 
-      // Build widgets array from API response
       const widgets = [];
-
-      // Add text content as paragraph widget
       if (result.message) {
         widgets.push({
           type: 'paragraph',
-          data: {
-            text: result.message,
-            timestamp: new Date().toISOString(),
-          },
+          data: { text: result.message, timestamp: new Date().toISOString() },
         });
       }
-
-      // Add any widgets from the API (template-builder, etc.)
       if (result.widgets && result.widgets.length > 0) {
-        for (const w of result.widgets) {
-          widgets.push(w);
-        }
+        for (const w of result.widgets) widgets.push(w);
       }
 
       dispatch(addMessage({
         conversationId: currentConversationId,
-        message: {
-          role: 'assistant',
-          widgets,
-        },
+        message: { role: 'assistant', widgets },
       }));
     } catch (err) {
-      // Show error as assistant message
       dispatch(addMessage({
         conversationId: currentConversationId,
         message: {
           role: 'assistant',
           widgets: [{
             type: 'paragraph',
-            data: {
-              text: `Sorry, something went wrong: ${err.message}`,
-              timestamp: new Date().toISOString(),
-            },
+            data: { text: `Something went wrong: ${err.message}`, timestamp: new Date().toISOString() },
           }],
         },
       }));
@@ -112,22 +87,21 @@ export default function Home() {
 
   if (!initialized || !user) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gray-950">
-        <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+      <div className="flex items-center justify-center h-screen bg-[#030712]">
+        <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col h-screen bg-gray-950">
+    <div className="flex flex-col h-screen bg-[#030712] noise">
       <Header />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col overflow-hidden relative">
           <ChatArea />
           <ChatInput onSend={handleSendMessage} />
         </div>
-        <RightPanel />
       </div>
     </div>
   );
