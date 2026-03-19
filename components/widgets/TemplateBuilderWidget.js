@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setRightPanel } from '@/store/slices/uiSlice';
+import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
-// Dynamically import EmailTemplateBuilder to avoid SSR issues
 const EmailTemplateBuilder = dynamic(
   () => import('../email-builder/EmailTemplateBuilder'),
   { ssr: false }
@@ -13,34 +12,37 @@ const EmailTemplateBuilder = dynamic(
 
 export default function TemplateBuilderWidget({ data, onExpand }) {
   const dispatch = useDispatch();
-  const { title, description, timestamp } = data;
+  const router = useRouter();
+  const { title, description, timestamp, editor_link, template_id, html } = data;
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isFullScreen, setIsFullScreen] = useState(false);
 
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === 'Escape' && isFullScreen) {
-        setIsFullScreen(false);
+      if (e.key === 'Escape' && isExpanded) {
+        setIsExpanded(false);
       }
     };
 
-    if (isFullScreen) {
+    if (isExpanded) {
       document.addEventListener('keydown', handleEscape);
     }
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
     };
-  }, [isFullScreen]);
+  }, [isExpanded]);
 
-  const handleExpand = () => {
-    console.log('Template Builder - handleExpand called');
-    console.log('onExpand:', onExpand);
-    console.log('Current isExpanded:', isExpanded);
-
-    // Open directly in expanded view (not right panel)
+  const handleOpenEditor = () => {
+    if (editor_link) {
+      // Extract template ID from editor link and navigate
+      const id = template_id || editor_link.split('/editor/')[1];
+      if (id) {
+        router.push(`/editor/${id}`);
+        return;
+      }
+    }
+    // Fallback: open inline builder
     setIsExpanded(true);
-    console.log('After setIsExpanded(true)');
   };
 
   if (isExpanded) {
@@ -68,46 +70,45 @@ export default function TemplateBuilderWidget({ data, onExpand }) {
   }
 
   return (
-    <div
-      className="template-builder-widget bg-gray-800 rounded-lg p-4 mb-3 cursor-pointer hover:bg-gray-700 transition-colors border-2 border-transparent hover:border-blue-500"
-      onClick={(e) => {
-        console.log('Clicked on template builder card!', e);
-        handleExpand();
-      }}
-    >
+    <div className="template-builder-widget bg-gray-800 rounded-lg p-4 mb-3 border border-gray-700">
+      {/* HTML Preview */}
+      {html && (
+        <div className="mb-3 rounded-lg overflow-hidden border border-gray-700 bg-white">
+          <iframe
+            srcDoc={html}
+            className="w-full pointer-events-none"
+            style={{ height: '300px' }}
+            title="Email preview"
+          />
+        </div>
+      )}
+
       <div className="flex items-start gap-4">
-        <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
-          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
+          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
           </svg>
         </div>
         <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-100 mb-1">
-            {title || 'Email Template Builder'}
+          <h3 className="text-base font-semibold text-gray-100 mb-1">
+            {title || 'Email Template'}
           </h3>
           {description && (
             <p className="text-sm text-gray-400 mb-3">{description}</p>
           )}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                console.log('Button clicked!');
-                handleExpand();
-              }}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-medium transition-colors"
+              onClick={handleOpenEditor}
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
             >
-              Open Template Builder
+              {editor_link ? 'Customize in Editor' : 'Open Template Builder'}
             </button>
-            <span className="text-sm text-gray-500">or click anywhere on this card</span>
+            {!editor_link && (
+              <span className="text-xs text-gray-500">Opens inline builder</span>
+            )}
           </div>
         </div>
       </div>
-      {timestamp && (
-        <span className="text-xs text-gray-500 mt-3 block">
-          {new Date(timestamp).toLocaleString()}
-        </span>
-      )}
     </div>
   );
 }
