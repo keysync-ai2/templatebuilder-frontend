@@ -22,6 +22,7 @@ import { COMPONENT_TYPES } from './componentLibrary';
 export default function EmailTemplateBuilder() {
   const dispatch = useDispatch();
   const components = useSelector((state) => state.emailBuilder.components);
+  console.log('[Builder] components from Redux:', components?.length, 'roots, first type:', components?.[0]?.type, 'first children:', components?.[0]?.children?.length);
   const [activeId, setActiveId] = useState(null);
   const [activeComponent, setActiveComponent] = useState(null);
   const [showBottomPanel, setShowBottomPanel] = useState(true);

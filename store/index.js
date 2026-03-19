@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './slices/authSlice';
 import chatReducer from './slices/chatSlice';
 import uiReducer from './slices/uiSlice';
 import templateBuilderReducer from './slices/templateBuilderSlice';
@@ -7,6 +8,7 @@ import emailBuilderReducer from './slices/emailBuilderSlice';
 export const makeStore = () => {
   return configureStore({
     reducer: {
+      auth: authReducer,
       chat: chatReducer,
       ui: uiReducer,
       templateBuilder: templateBuilderReducer,

@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState, useCallback } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { useDispatch, useSelector } from 'react-redux';
 import { loadTemplate } from '@/store/slices/emailBuilderSlice';
+import * as api from '@/lib/api';
 import dynamic from 'next/dynamic';
 
 const EmailTemplateBuilder = dynamic(
@@ -11,43 +12,88 @@ const EmailTemplateBuilder = dynamic(
   { ssr: false }
 );
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-
 export default function EditorPage() {
   const { templateId } = useParams();
+  const router = useRouter();
   const dispatch = useDispatch();
+  const { components, templateName, templateSubject } = useSelector(
+    (state) => state.emailBuilder
+  );
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
   const [error, setError] = useState(null);
+  const [isOwned, setIsOwned] = useState(false); // true if user owns this template
 
   useEffect(() => {
     if (!templateId) return;
+    fetchTemplate();
+  }, [templateId]);
 
-    async function fetchTemplate() {
+  async function fetchTemplate() {
+    // Try authenticated load first (user's own template)
+    const token = api.getAccessToken();
+    if (token) {
       try {
-        const res = await fetch(`${API_URL}/api/templates/public/${templateId}`);
-        const json = await res.json();
-
-        if (!res.ok || !json.success) {
-          setError(json.message || 'Template not found');
-          setLoading(false);
-          return;
-        }
-
+        const data = await api.getTemplate(templateId);
         dispatch(loadTemplate({
-          templateName: json.data.templateName,
-          templateSubject: json.data.templateSubject,
-          components: json.data.components,
+          templateName: data.templateName,
+          templateSubject: data.templateSubject,
+          components: data.components,
         }));
-
-        setLoading(false);
-      } catch (err) {
-        setError('Failed to load template');
-        setLoading(false);
+        setIsOwned(true);
+        setTimeout(() => setLoading(false), 100);
+        return;
+      } catch {
+        // Not owned by user or not logged in — try public
       }
     }
 
-    fetchTemplate();
-  }, [templateId, dispatch]);
+    // Fallback: public load (MCP-generated templates)
+    try {
+      const data = await api.getPublicTemplate(templateId);
+      dispatch(loadTemplate({
+        templateName: data.templateName,
+        templateSubject: data.templateSubject,
+        components: data.components,
+      }));
+      setIsOwned(false);
+      setTimeout(() => setLoading(false), 100);
+    } catch (err) {
+      setError(err.message || 'Template not found');
+      setLoading(false);
+    }
+  }
+
+  const handleSave = useCallback(async () => {
+    if (saving) return;
+    setSaving(true);
+    setSaved(false);
+    try {
+      if (isOwned) {
+        await api.updateTemplate(templateId, {
+          name: templateName,
+          subject: templateSubject,
+          components,
+        });
+      } else {
+        // Save as new template for logged-in user
+        const token = api.getAccessToken();
+        if (!token) {
+          router.push('/auth/login');
+          return;
+        }
+        await api.createTemplate(templateName, components, templateSubject);
+        setIsOwned(true);
+      }
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (err) {
+      console.error('Save failed:', err);
+    } finally {
+      setSaving(false);
+    }
+  }, [saving, isOwned, templateId, templateName, templateSubject, components, router]);
 
   if (loading) {
     return (
@@ -77,8 +123,47 @@ export default function EditorPage() {
   }
 
   return (
-    <div className="h-screen bg-gray-950">
-      <EmailTemplateBuilder />
+    <div className="h-screen bg-gray-950 flex flex-col">
+      {/* Editor toolbar */}
+      <div className="flex items-center justify-between px-4 py-2 bg-gray-900 border-b border-gray-800">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => router.push('/templates')}
+            className="text-gray-400 hover:text-white p-1.5 hover:bg-gray-800 rounded transition-colors"
+            title="Back to templates"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+          </button>
+          <span className="text-sm text-gray-300 font-medium truncate max-w-xs">
+            {templateName || 'Untitled Template'}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {saved && (
+            <span className="text-xs text-green-400 flex items-center gap-1">
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              Saved
+            </span>
+          )}
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-600/50 text-white text-sm font-medium rounded-lg transition-colors"
+          >
+            {saving ? 'Saving...' : 'Save'}
+          </button>
+        </div>
+      </div>
+
+      {/* Builder */}
+      <div className="flex-1 overflow-hidden">
+        <EmailTemplateBuilder />
+      </div>
     </div>
   );
 }
