@@ -47,9 +47,9 @@ export default function Header() {
   ];
 
   return (
-    <header className="bg-[#0a0f1a]/80 backdrop-blur-xl border-b border-gray-800/50 px-5 flex items-center justify-between h-14 sticky top-0 z-40">
+    <header className="bg-[#0a0f1a]/80 backdrop-blur-xl border-b border-gray-800/50 px-3 sm:px-5 flex items-center justify-between h-14 sticky top-0 z-40">
       {/* Left: Logo + Nav */}
-      <div className="flex items-center gap-8">
+      <div className="flex items-center gap-4 sm:gap-8">
         <Link href="/" className="flex items-center gap-2.5 hover:opacity-90 transition-opacity">
           <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center shadow-md shadow-cyan-500/15">
             <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,7 +77,7 @@ export default function Header() {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   {icon}
                 </svg>
-                {label}
+                <span className="hidden sm:inline">{label}</span>
                 {isActive && (
                   <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-cyan-400 rounded-full" />
                 )}
@@ -108,7 +108,7 @@ export default function Header() {
           </button>
 
           {showProfile && (
-            <div className="absolute right-0 top-full mt-2 w-56 glass rounded-xl shadow-2xl shadow-black/40 py-1 z-50 animate-fade-in-up" style={{ animationDuration: '0.15s' }}>
+            <div className="absolute right-0 top-full mt-2 w-56 glass rounded-xl shadow-2xl shadow-black/40 py-1 z-50 animate-fade-in-up max-sm:right-[-8px]" style={{ animationDuration: '0.15s' }}>
               <div className="px-4 py-3 border-b border-gray-700/50">
                 <p className="text-sm font-medium text-gray-200">{user?.name || 'User'}</p>
                 <p className="text-xs text-gray-500 truncate">{user?.email}</p>

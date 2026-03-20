@@ -13,6 +13,14 @@ const EmailTemplateBuilder = dynamic(
 );
 
 export default function EditorPage() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   const { templateId } = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -119,6 +127,30 @@ export default function EditorPage() {
           </div>
           <h2 className="text-lg font-semibold text-gray-100 mb-2">Template Not Found</h2>
           <p className="text-gray-400 text-sm">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isMobile) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-[#030712] noise px-6">
+        <div className="glass rounded-2xl p-8 max-w-sm w-full text-center">
+          <div className="w-14 h-14 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/10 flex items-center justify-center">
+            <svg className="w-7 h-7 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z" />
+            </svg>
+          </div>
+          <h2 className="text-lg font-semibold text-gray-100 mb-2">Desktop Only</h2>
+          <p className="text-gray-400 text-sm leading-relaxed mb-6">
+            Email editor is available on desktop only. Please switch to a desktop browser for the full editing experience.
+          </p>
+          <button
+            onClick={() => router.push('/templates')}
+            className="px-6 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl text-sm font-medium transition-all duration-300 btn-shine shadow-lg shadow-cyan-500/10"
+          >
+            Back to Templates
+          </button>
         </div>
       </div>
     );

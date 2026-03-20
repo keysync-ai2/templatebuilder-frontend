@@ -11,6 +11,7 @@ import {
   createConversation, addMessage, setLoading,
   setBackendConversationId, setConversations, updateConversationTitle,
 } from '@/store/slices/chatSlice';
+import { toggleLeftPanel } from '@/store/slices/uiSlice';
 import { fetchMe } from '@/store/slices/authSlice';
 import { parseCommand, getHelpText } from '@/lib/slashCommands';
 import * as api from '@/lib/api';
@@ -203,6 +204,16 @@ export default function ChatPage() {
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
         <div className="flex-1 flex flex-col overflow-hidden relative">
+          {/* Mobile sidebar toggle */}
+          <button
+            onClick={() => dispatch(toggleLeftPanel())}
+            className="md:hidden absolute top-3 left-3 z-30 p-2 glass rounded-lg text-gray-400 hover:text-white transition-colors"
+            aria-label="Toggle sidebar"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
           <ChatArea onSendPrompt={(text) => handleSendMessage({ text, attachments: [] })} />
           <ChatInput onSend={handleSendMessage} onSlashCommand={handleSlashCommand} />
         </div>

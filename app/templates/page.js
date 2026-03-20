@@ -110,40 +110,44 @@ export default function TemplatesPage() {
         {/* Hero section */}
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/5 via-transparent to-transparent pointer-events-none" />
-          <div className="max-w-6xl mx-auto px-6 pt-10 pb-8 relative">
-            <div className="flex items-end justify-between">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-8 sm:pt-10 pb-6 sm:pb-8 relative">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <div>
-                <h2 className="text-3xl font-semibold tracking-tight mb-1">Templates</h2>
+                <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-1">Templates</h2>
                 <p className="text-gray-500 text-sm">
                   {templates.length > 0
                     ? `${templates.length} template${templates.length === 1 ? '' : 's'}`
                     : 'Create your first email template'}
                 </p>
               </div>
-              <button
-                onClick={() => setShowSuggestModal(true)}
-                className="px-5 py-2.5 glass rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:border-cyan-500/30 transition-all duration-300 flex items-center gap-2"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                Find a Template
-              </button>
-              <button
-                onClick={handleNew}
-                className="px-5 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2 btn-shine shadow-lg shadow-cyan-500/10 hover:shadow-cyan-500/20"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
-                New Template
-              </button>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <button
+                  onClick={() => setShowSuggestModal(true)}
+                  className="px-4 sm:px-5 py-2.5 glass rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:border-cyan-500/30 transition-all duration-300 flex items-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <span className="hidden sm:inline">Find a Template</span>
+                  <span className="sm:hidden">Find</span>
+                </button>
+                <button
+                  onClick={handleNew}
+                  className="px-4 sm:px-5 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2 btn-shine shadow-lg shadow-cyan-500/10 hover:shadow-cyan-500/20"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  <span className="hidden sm:inline">New Template</span>
+                  <span className="sm:hidden">New</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Content */}
-        <div className="max-w-6xl mx-auto px-6 pb-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-12">
           {loading ? (
             <div className="flex justify-center py-24">
               <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />

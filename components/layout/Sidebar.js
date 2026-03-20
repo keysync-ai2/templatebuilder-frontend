@@ -2,6 +2,7 @@
 
 import { useSelector, useDispatch } from 'react-redux';
 import { createConversation, setCurrentConversation, deleteConversation, setMessages } from '@/store/slices/chatSlice';
+import { setLeftPanel } from '@/store/slices/uiSlice';
 import * as api from '@/lib/api';
 
 export default function Sidebar() {
@@ -16,8 +17,15 @@ export default function Sidebar() {
     }));
   };
 
+  const closeSidebarOnMobile = () => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      dispatch(setLeftPanel(false));
+    }
+  };
+
   const handleSelectConversation = async (id) => {
     dispatch(setCurrentConversation(id));
+    closeSidebarOnMobile();
 
     // Load messages from API if we haven't already and this is a backend conversation
     const conv = conversations.find(c => c.id === id);
@@ -77,18 +85,38 @@ export default function Sidebar() {
   if (!leftPanelOpen) return null;
 
   return (
-    <aside className="w-64 bg-[#0a0f1a]/80 backdrop-blur-xl border-r border-gray-800/50 flex flex-col h-full">
-      <div className="p-3">
-        <button
-          onClick={handleNewChat}
-          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 glass rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:border-cyan-500/30 transition-all duration-200"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-          </svg>
-          New Chat
-        </button>
-      </div>
+    <>
+      {/* Mobile backdrop */}
+      <div
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+        onClick={() => dispatch(setLeftPanel(false))}
+      />
+
+      <aside className="w-64 bg-[#0a0f1a]/95 md:bg-[#0a0f1a]/80 backdrop-blur-xl border-r border-gray-800/50 flex flex-col h-full fixed md:relative z-50 md:z-auto top-0 md:top-auto left-0 md:left-auto">
+        {/* Mobile close button */}
+        <div className="flex items-center justify-between p-3 md:hidden">
+          <span className="text-sm font-medium text-gray-300">Conversations</span>
+          <button
+            onClick={() => dispatch(setLeftPanel(false))}
+            className="p-1.5 text-gray-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="p-3 pt-0 md:pt-3">
+          <button
+            onClick={handleNewChat}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 glass rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:border-cyan-500/30 transition-all duration-200"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            New Chat
+          </button>
+        </div>
 
       <div className="flex-1 overflow-y-auto px-2 pb-3">
         <h2 className="text-[10px] font-semibold text-gray-600 uppercase tracking-widest px-3 py-2.5">
@@ -129,5 +157,6 @@ export default function Sidebar() {
         </div>
       </div>
     </aside>
+    </>
   );
 }

@@ -50,7 +50,7 @@ export default function ChatArea({ onSendPrompt }) {
 
     return (
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-3xl mx-auto px-6 py-12">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
           {/* Hero */}
           <div className="text-center mb-12 animate-fade-in-up">
             <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
@@ -134,7 +134,7 @@ export default function ChatArea({ onSendPrompt }) {
 
           {/* Features */}
           <div className="animate-fade-in-up" style={{ animationDelay: '300ms' }}>
-            <div className="flex items-center justify-center gap-6 text-[11px] text-gray-600">
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-[11px] text-gray-600">
               <span className="flex items-center gap-1.5">
                 <svg className="w-3.5 h-3.5 text-cyan-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                 30+ Templates
@@ -160,8 +160,8 @@ export default function ChatArea({ onSendPrompt }) {
 
   // ─── Chat Messages ───
   return (
-    <div className="flex-1 overflow-y-auto p-6">
-      <div className="max-w-3xl mx-auto space-y-6">
+    <div className="flex-1 overflow-y-auto p-3 sm:p-6">
+      <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
         {currentMessages.map((message) => (
           <div
             key={message.id}

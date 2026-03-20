@@ -6,8 +6,8 @@ export default function SlashAutocomplete({ commands, selectedIndex, onSelect })
   if (!commands || commands.length === 0) return null;
 
   return (
-    <div className="absolute bottom-full left-0 right-0 mb-2 mx-auto max-w-3xl">
-      <div className="glass rounded-xl shadow-2xl shadow-black/40 py-1 overflow-hidden animate-fade-in-up" style={{ animationDuration: '0.1s' }}>
+    <div className="absolute bottom-full left-0 right-0 mb-2 mx-2 sm:mx-auto sm:max-w-3xl">
+      <div className="glass rounded-xl shadow-2xl shadow-black/40 py-1 overflow-hidden animate-fade-in-up max-h-[60vh] overflow-y-auto" style={{ animationDuration: '0.1s' }}>
         <div className="px-3 py-1.5 border-b border-gray-700/50">
           <span className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Commands</span>
         </div>
@@ -27,7 +27,7 @@ export default function SlashAutocomplete({ commands, selectedIndex, onSelect })
             {cmd.args && (
               <span className="text-[10px] text-gray-600 font-mono">{cmd.args}</span>
             )}
-            <span className="text-[11px] text-gray-500 ml-auto">{cmd.description}</span>
+            <span className="text-[11px] text-gray-500 ml-auto hidden sm:inline truncate">{cmd.description}</span>
             <span className={`text-[9px] px-1.5 py-0.5 rounded font-medium ${
               cmd.type === 'frontend'
                 ? 'bg-green-500/10 text-green-400'
