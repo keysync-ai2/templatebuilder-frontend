@@ -1,7 +1,7 @@
 'use client';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import WidgetRenderer from '../widgets/WidgetRenderer';
 import { setRightPanel } from '@/store/slices/uiSlice';
 
@@ -10,6 +10,21 @@ export default function ChatArea() {
   const { currentConversationId, messages, isLoading } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.auth);
   const messagesEndRef = useRef(null);
+  const [statusMessage, setStatusMessage] = useState('');
+
+  // Listen for status updates from polling
+  useEffect(() => {
+    function handleStatus(e) {
+      setStatusMessage(e.detail.message || '');
+    }
+    window.addEventListener('chat-status', handleStatus);
+    return () => window.removeEventListener('chat-status', handleStatus);
+  }, []);
+
+  // Clear status when loading stops
+  useEffect(() => {
+    if (!isLoading) setStatusMessage('');
+  }, [isLoading]);
 
   const currentMessages = currentConversationId ? messages[currentConversationId] || [] : [];
 
@@ -129,20 +144,30 @@ export default function ChatArea() {
           </div>
         ))}
 
-        {/* Typing indicator */}
+        {/* Status indicator */}
         {isLoading && (
           <div className="flex gap-3 animate-fade-in-up" style={{ animationDuration: '0.2s' }}>
             <div className="shrink-0 w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/10 flex items-center justify-center">
-              <svg className="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-cyan-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
               </svg>
             </div>
-            <div className="glass rounded-2xl rounded-tl-md px-5 py-4">
-              <div className="flex gap-1.5">
-                <div className="w-2 h-2 bg-cyan-400/60 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                <div className="w-2 h-2 bg-cyan-400/60 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                <div className="w-2 h-2 bg-cyan-400/60 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-              </div>
+            <div className="glass rounded-2xl rounded-tl-md px-5 py-3.5">
+              {statusMessage ? (
+                <div className="flex items-center gap-2.5">
+                  <div className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin shrink-0" />
+                  <span className="text-sm text-gray-300 animate-pulse">{statusMessage}</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2.5">
+                  <div className="flex gap-1.5">
+                    <div className="w-2 h-2 bg-cyan-400/60 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <div className="w-2 h-2 bg-cyan-400/60 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <div className="w-2 h-2 bg-cyan-400/60 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  </div>
+                  <span className="text-xs text-gray-500">Thinking...</span>
+                </div>
+              )}
             </div>
           </div>
         )}
