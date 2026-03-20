@@ -1,114 +1,129 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic';
 
-const EmailTemplateBuilder = dynamic(
-  () => import('../email-builder/EmailTemplateBuilder'),
-  { ssr: false }
-);
-
-export default function TemplateBuilderWidget({ data, onExpand }) {
-  const dispatch = useDispatch();
+export default function TemplateBuilderWidget({ data }) {
   const router = useRouter();
-  const { title, description, timestamp, editor_link, template_id, html } = data;
-  const [isExpanded, setIsExpanded] = useState(false);
+  const { title, description, editor_link, template_id, html } = data;
+  const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === 'Escape' && isExpanded) {
-        setIsExpanded(false);
-      }
+      if (e.key === 'Escape' && showPreview) setShowPreview(false);
     };
-
-    if (isExpanded) {
-      document.addEventListener('keydown', handleEscape);
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-    };
-  }, [isExpanded]);
+    if (showPreview) document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [showPreview]);
 
   const handleOpenEditor = () => {
     if (editor_link) {
-      // Extract template ID from editor link and navigate
       const id = template_id || editor_link.split('/editor/')[1];
       if (id) {
         router.push(`/editor/${id}`);
         return;
       }
     }
-    // Fallback: open inline builder
-    setIsExpanded(true);
   };
 
-  if (isExpanded) {
-    return (
-      <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
-        <div className="bg-gray-950 rounded-lg shadow-2xl w-full max-w-[95vw] h-[95vh] flex flex-col">
-          <div className="flex items-center justify-between p-4 bg-gray-900 border-b border-gray-800 rounded-t-lg">
-            <h3 className="text-lg font-semibold text-gray-100">{title || 'Email Template Builder'}</h3>
-            <button
-              onClick={() => setIsExpanded(false)}
-              className="text-gray-400 hover:text-gray-200 p-2 hover:bg-gray-800 rounded transition-colors"
-              title="Close builder"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-          <div className="flex-1 overflow-hidden">
-            <EmailTemplateBuilder />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="template-builder-widget bg-gray-800 rounded-lg p-4 mb-3 border border-gray-700">
-      {/* HTML Preview */}
-      {html && (
-        <div className="mb-3 rounded-lg overflow-hidden border border-gray-700 bg-white">
-          <iframe
-            srcDoc={html}
-            className="w-full pointer-events-none"
-            style={{ height: '300px' }}
-            title="Email preview"
-          />
-        </div>
-      )}
+    <>
+      <div className="glass rounded-2xl rounded-tl-md overflow-hidden">
+        {/* Card content */}
+        <div className="p-4">
+          <div className="flex items-start gap-3">
+            <div className="shrink-0 w-9 h-9 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/10 rounded-xl flex items-center justify-center">
+              <svg className="w-4.5 h-4.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+              </svg>
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="text-sm font-semibold text-gray-200">{title || 'Email Template'}</h3>
+              {description && <p className="text-xs text-gray-500 mt-0.5">{description}</p>}
+            </div>
+          </div>
 
-      <div className="flex items-start gap-4">
-        <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
-          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-          </svg>
-        </div>
-        <div className="flex-1">
-          <h3 className="text-base font-semibold text-gray-100 mb-1">
-            {title || 'Email Template'}
-          </h3>
-          {description && (
-            <p className="text-sm text-gray-400 mb-3">{description}</p>
-          )}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleOpenEditor}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
-            >
-              {editor_link ? 'Customize in Editor' : 'Open Template Builder'}
-            </button>
-            {!editor_link && (
-              <span className="text-xs text-gray-500">Opens inline builder</span>
+          {/* Action buttons */}
+          <div className="flex items-center gap-2 mt-4">
+            {html && (
+              <button
+                onClick={() => setShowPreview(true)}
+                className="flex items-center gap-1.5 px-3.5 py-2 glass rounded-xl text-xs font-medium text-gray-300 hover:text-white hover:border-gray-600 transition-all"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Preview
+              </button>
+            )}
+            {editor_link && (
+              <button
+                onClick={handleOpenEditor}
+                className="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl text-xs font-medium transition-all btn-shine shadow-md shadow-cyan-500/10"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                </svg>
+                Customize in Editor
+              </button>
             )}
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Preview Modal */}
+      {showPreview && html && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(8px)' }}
+        >
+          <div className="bg-[#0a0f1a] rounded-2xl border border-gray-700/50 shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col animate-fade-in-up" style={{ animationDuration: '0.2s' }}>
+            {/* Modal header */}
+            <div className="flex items-center justify-between px-5 py-3.5 border-b border-gray-700/50">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/10 rounded-lg flex items-center justify-center">
+                  <svg className="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                  </svg>
+                </div>
+                <span className="text-sm font-medium text-gray-200">{title || 'Email Preview'}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                {editor_link && (
+                  <button
+                    onClick={handleOpenEditor}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-lg text-xs font-medium transition-all"
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
+                    </svg>
+                    Edit
+                  </button>
+                )}
+                <button
+                  onClick={() => setShowPreview(false)}
+                  className="p-1.5 text-gray-500 hover:text-gray-300 hover:bg-white/5 rounded-lg transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Email render */}
+            <div className="flex-1 overflow-auto bg-gray-100 rounded-b-2xl">
+              <iframe
+                srcDoc={html}
+                className="w-full h-full min-h-[600px]"
+                title="Email preview"
+                style={{ border: 'none' }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
