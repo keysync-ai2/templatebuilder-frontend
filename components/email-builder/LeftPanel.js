@@ -103,25 +103,191 @@ const CATEGORY_ICONS = {
 
 const CATEGORIES = ['all', 'hero', 'product', 'cta', 'content', 'footer'];
 
+// ─── Preset wireframe previews ───
+const PRESET_PREVIEWS = {
+  'hero-bold': (
+    <div className="space-y-1.5 p-2">
+      <div className="h-3 bg-blue-300 rounded w-3/4 mx-auto" />
+      <div className="h-1.5 bg-blue-200 rounded w-1/2 mx-auto" />
+      <div className="h-5 bg-white rounded w-1/3 mx-auto mt-1" />
+    </div>
+  ),
+  'hero-image': (
+    <div className="space-y-1.5 p-2">
+      <div className="h-6 bg-gray-300 rounded" />
+      <div className="h-3 bg-blue-300 rounded w-3/4 mx-auto" />
+      <div className="h-5 bg-blue-400 rounded w-1/3 mx-auto" />
+    </div>
+  ),
+  'hero-minimal': (
+    <div className="space-y-1.5 p-3">
+      <div className="h-2.5 bg-gray-400 rounded w-2/3 mx-auto" />
+      <div className="h-1.5 bg-gray-200 rounded w-4/5 mx-auto" />
+    </div>
+  ),
+  'product-2col': (
+    <div className="flex gap-1.5 p-2">
+      {[1, 2].map(i => (
+        <div key={i} className="flex-1 space-y-1">
+          <div className="h-6 bg-gray-200 rounded" />
+          <div className="h-1.5 bg-gray-300 rounded w-3/4" />
+          <div className="h-1.5 bg-pink-300 rounded w-1/2" />
+          <div className="h-3 bg-pink-400 rounded w-2/3 mx-auto" />
+        </div>
+      ))}
+    </div>
+  ),
+  'product-3col': (
+    <div className="flex gap-1 p-2">
+      {[1, 2, 3].map(i => (
+        <div key={i} className="flex-1 space-y-1">
+          <div className="h-5 bg-gray-200 rounded" />
+          <div className="h-1 bg-gray-300 rounded w-3/4" />
+          <div className="h-1 bg-pink-300 rounded w-1/2" />
+        </div>
+      ))}
+    </div>
+  ),
+  'product-featured': (
+    <div className="flex gap-1.5 p-2">
+      <div className="flex-1 h-12 bg-gray-200 rounded" />
+      <div className="flex-1 space-y-1">
+        <div className="h-2 bg-gray-400 rounded w-3/4" />
+        <div className="h-1 bg-gray-200 rounded" />
+        <div className="h-2 bg-blue-300 rounded w-1/2" />
+        <div className="h-3 bg-blue-400 rounded w-2/3" />
+      </div>
+    </div>
+  ),
+  'cta-single': (
+    <div className="space-y-1.5 p-3">
+      <div className="h-2.5 bg-gray-400 rounded w-2/3 mx-auto" />
+      <div className="h-1.5 bg-gray-200 rounded w-4/5 mx-auto" />
+      <div className="h-5 bg-blue-500 rounded w-1/3 mx-auto mt-1" />
+    </div>
+  ),
+  'cta-dual': (
+    <div className="space-y-1.5 p-2">
+      <div className="h-2 bg-gray-400 rounded w-2/3 mx-auto" />
+      <div className="h-1.5 bg-gray-200 rounded w-1/2 mx-auto" />
+      <div className="flex gap-1.5 mt-1 justify-center">
+        <div className="h-4 bg-blue-500 rounded w-1/4" />
+        <div className="h-4 bg-gray-300 rounded w-1/4" />
+      </div>
+    </div>
+  ),
+  'content-text-image': (
+    <div className="flex gap-1.5 p-2">
+      <div className="flex-1 space-y-1">
+        <div className="h-2 bg-gray-400 rounded w-3/4" />
+        <div className="h-1 bg-gray-200 rounded" />
+        <div className="h-1 bg-gray-200 rounded w-5/6" />
+      </div>
+      <div className="flex-1 h-10 bg-gray-200 rounded" />
+    </div>
+  ),
+  'content-testimonial': (
+    <div className="space-y-1.5 p-2">
+      <div className="border-l-2 border-blue-400 pl-2 space-y-1">
+        <div className="h-1 bg-gray-300 rounded" />
+        <div className="h-1 bg-gray-300 rounded w-5/6" />
+      </div>
+      <div className="h-1 bg-gray-200 rounded w-1/3 ml-3" />
+      <div className="h-1 bg-gray-100 rounded w-1/4 ml-3" />
+    </div>
+  ),
+  'content-stats': (
+    <div className="flex gap-1.5 p-2">
+      {[1, 2, 3].map(i => (
+        <div key={i} className="flex-1 text-center space-y-0.5">
+          <div className="h-3 bg-blue-300 rounded w-2/3 mx-auto" />
+          <div className="h-1 bg-gray-200 rounded w-4/5 mx-auto" />
+        </div>
+      ))}
+    </div>
+  ),
+  'content-checklist': (
+    <div className="space-y-1 p-2">
+      <div className="h-2 bg-gray-400 rounded w-1/2" />
+      {[1, 2, 3, 4].map(i => (
+        <div key={i} className="flex items-center gap-1">
+          <div className="w-2 h-2 bg-green-400 rounded-sm shrink-0" />
+          <div className="h-1 bg-gray-200 rounded flex-1" />
+        </div>
+      ))}
+    </div>
+  ),
+  'footer-simple': (
+    <div className="space-y-1 p-2">
+      <div className="h-px bg-gray-300" />
+      <div className="h-1 bg-gray-300 rounded w-1/3 mx-auto" />
+      <div className="h-1 bg-gray-200 rounded w-2/3 mx-auto" />
+      <div className="h-1 bg-blue-200 rounded w-1/4 mx-auto" />
+    </div>
+  ),
+  'footer-social': (
+    <div className="space-y-1 p-2">
+      <div className="flex gap-1 justify-center">
+        {[1, 2, 3].map(i => <div key={i} className="w-3 h-1 bg-blue-300 rounded" />)}
+      </div>
+      <div className="h-px bg-gray-300" />
+      <div className="h-1 bg-gray-300 rounded w-1/3 mx-auto" />
+      <div className="h-1 bg-gray-200 rounded w-1/2 mx-auto" />
+    </div>
+  ),
+  'coupon-banner': (
+    <div className="space-y-1.5 p-2">
+      <div className="h-2 bg-pink-300 rounded w-1/2 mx-auto" />
+      <div className="h-4 border border-dashed border-pink-400 rounded flex items-center justify-center">
+        <div className="h-1.5 bg-pink-200 rounded w-1/2" />
+      </div>
+      <div className="h-3 bg-pink-500 rounded w-1/3 mx-auto" />
+    </div>
+  ),
+  'countdown-urgency': (
+    <div className="space-y-1.5 p-2">
+      <div className="h-2.5 bg-red-400 rounded w-2/3 mx-auto" />
+      <div className="h-1.5 bg-red-200 rounded w-4/5 mx-auto" />
+      <div className="h-5 bg-red-500 rounded w-1/3 mx-auto mt-1" />
+    </div>
+  ),
+};
+
 // ─── Preset Card ───
 function PresetCard({ preset, onInsert }) {
+  const preview = PRESET_PREVIEWS[preset.preset_id];
+  const bgColors = {
+    hero: 'bg-blue-50',
+    product: 'bg-amber-50',
+    cta: 'bg-indigo-50',
+    content: 'bg-emerald-50',
+    footer: 'bg-slate-100',
+  };
+
   return (
     <div
       onClick={() => onInsert(preset)}
-      className="bg-white border border-gray-200 rounded-xl p-3 cursor-pointer hover:border-blue-400 hover:shadow-md transition-all group"
+      className="bg-white border border-gray-200 rounded-xl overflow-hidden cursor-pointer hover:border-blue-400 hover:shadow-md transition-all group"
     >
-      <div className="flex items-start gap-2.5">
-        <span className="text-lg">{CATEGORY_ICONS[preset.category] || '📦'}</span>
-        <div className="flex-1 min-w-0">
-          <h4 className="text-xs font-semibold text-gray-800 truncate">{preset.name}</h4>
-          <p className="text-[10px] text-gray-500 mt-0.5 line-clamp-2 leading-relaxed">{preset.description}</p>
-        </div>
+      {/* Preview wireframe */}
+      <div className={`${bgColors[preset.category] || 'bg-gray-50'} border-b border-gray-100`}>
+        {preview || (
+          <div className="p-3 space-y-1.5">
+            <div className="h-2 bg-gray-300 rounded w-3/4 mx-auto" />
+            <div className="h-1.5 bg-gray-200 rounded w-1/2 mx-auto" />
+          </div>
+        )}
       </div>
-      <div className="mt-2 flex items-center justify-between">
-        <span className="text-[10px] text-gray-400 uppercase tracking-wide">{preset.category}</span>
-        <span className="text-[10px] text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity font-medium">
-          + Insert
-        </span>
+
+      {/* Info */}
+      <div className="p-2.5">
+        <div className="flex items-center justify-between">
+          <h4 className="text-xs font-semibold text-gray-800 truncate">{preset.name}</h4>
+          <span className="text-[10px] text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity font-medium shrink-0 ml-1">
+            + Insert
+          </span>
+        </div>
+        <p className="text-[10px] text-gray-500 mt-0.5 line-clamp-1 leading-relaxed">{preset.description}</p>
       </div>
     </div>
   );
