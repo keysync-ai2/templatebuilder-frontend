@@ -12,6 +12,7 @@ import {
   setBackendConversationId, setConversations, updateConversationTitle,
 } from '@/store/slices/chatSlice';
 import { fetchMe } from '@/store/slices/authSlice';
+import { parseCommand, getHelpText } from '@/lib/slashCommands';
 import * as api from '@/lib/api';
 
 export default function ChatPage() {
@@ -123,6 +124,71 @@ export default function ChatPage() {
     }
   };
 
+  const handleSlashCommand = async (text) => {
+    if (!currentConversationId) return;
+
+    const parsed = parseCommand(text);
+    if (!parsed) return;
+
+    const { command, args } = parsed;
+
+    // Show the command in chat
+    dispatch(addMessage({
+      conversationId: currentConversationId,
+      message: { role: 'user', text: text },
+    }));
+
+    // Frontend commands — instant, no API
+    if (command === 'help') {
+      dispatch(addMessage({
+        conversationId: currentConversationId,
+        message: { role: 'assistant', widgets: [{ type: 'paragraph', data: { text: getHelpText() } }] },
+      }));
+      return;
+    }
+    if (command === 'new') {
+      try {
+        const data = await api.createTemplate('Untitled Template', []);
+        router.push(`/editor/${data.id}?from=chat`);
+      } catch (err) {
+        console.error('Failed to create template:', err);
+      }
+      return;
+    }
+    if (command === 'templates') {
+      router.push('/templates');
+      return;
+    }
+    if (command === 'brand' && !args) {
+      router.push('/brand');
+      return;
+    }
+
+    // Backend commands — call API
+    dispatch(setLoading(true));
+    try {
+      const result = await api.sendChatCommand(command, args);
+      const widgets = [];
+      if (result.message) {
+        widgets.push({ type: 'paragraph', data: { text: result.message } });
+      }
+      if (result.widget_type && result.widget_data) {
+        widgets.push({ type: result.widget_type, data: result.widget_data });
+      }
+      dispatch(addMessage({
+        conversationId: currentConversationId,
+        message: { role: 'assistant', widgets },
+      }));
+    } catch (err) {
+      dispatch(addMessage({
+        conversationId: currentConversationId,
+        message: { role: 'assistant', widgets: [{ type: 'paragraph', data: { text: `Command failed: ${err.message}` } }] },
+      }));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
   if (!initialized || !user) {
     return (
       <div className="flex items-center justify-center h-screen bg-[#030712]">
@@ -138,7 +204,7 @@ export default function ChatPage() {
         <Sidebar />
         <div className="flex-1 flex flex-col overflow-hidden relative">
           <ChatArea onSendPrompt={(text) => handleSendMessage({ text, attachments: [] })} />
-          <ChatInput onSend={handleSendMessage} />
+          <ChatInput onSend={handleSendMessage} onSlashCommand={handleSlashCommand} />
         </div>
       </div>
     </div>
