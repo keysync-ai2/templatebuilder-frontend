@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadTemplate } from '@/store/slices/emailBuilderSlice';
 import * as api from '@/lib/api';
@@ -15,6 +15,7 @@ const EmailTemplateBuilder = dynamic(
 export default function EditorPage() {
   const { templateId } = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useDispatch();
   const { components, templateName, templateSubject } = useSelector(
     (state) => state.emailBuilder
@@ -23,7 +24,8 @@ export default function EditorPage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState(null);
-  const [isOwned, setIsOwned] = useState(false); // true if user owns this template
+  const [isOwned, setIsOwned] = useState(false);
+  const backTo = searchParams.get('from') === 'chat' ? '/chat' : '/templates';
 
   useEffect(() => {
     if (!templateId) return;
@@ -128,9 +130,9 @@ export default function EditorPage() {
       <div className="flex items-center justify-between px-4 py-2 bg-gray-900 border-b border-gray-800">
         <div className="flex items-center gap-3">
           <button
-            onClick={() => router.push('/templates')}
+            onClick={() => router.push(backTo)}
             className="text-gray-400 hover:text-white p-1.5 hover:bg-gray-800 rounded transition-colors"
-            title="Back to templates"
+            title={backTo === '/chat' ? 'Back to chat' : 'Back to templates'}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />

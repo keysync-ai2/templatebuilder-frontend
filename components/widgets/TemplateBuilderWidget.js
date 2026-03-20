@@ -24,7 +24,7 @@ export default function TemplateBuilderWidget({ data }) {
     if (editor_link || template_id) {
       const id = template_id || editor_link.split('/editor/')[1];
       if (id) {
-        router.push(`/editor/${id}`);
+        router.push(`/editor/${id}?from=chat`);
         return;
       }
     }
