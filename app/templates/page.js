@@ -8,6 +8,7 @@ import { fetchBrand } from '@/store/slices/brandSlice';
 import { loadTemplate } from '@/store/slices/emailBuilderSlice';
 import Header from '@/components/layout/Header';
 import BrandOnboardingModal from '@/components/brand/BrandOnboardingModal';
+import SuggestionModal from '@/components/suggest/SuggestionModal';
 import * as api from '@/lib/api';
 
 export default function TemplatesPage() {
@@ -19,6 +20,7 @@ export default function TemplatesPage() {
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(null);
   const [showBrandModal, setShowBrandModal] = useState(false);
+  const [showSuggestModal, setShowSuggestModal] = useState(false);
 
   useEffect(() => {
     const token = api.getAccessToken();
@@ -118,6 +120,15 @@ export default function TemplatesPage() {
                     : 'Create your first email template'}
                 </p>
               </div>
+              <button
+                onClick={() => setShowSuggestModal(true)}
+                className="px-5 py-2.5 glass rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:border-cyan-500/30 transition-all duration-300 flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                Find a Template
+              </button>
               <button
                 onClick={handleNew}
                 className="px-5 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2 btn-shine shadow-lg shadow-cyan-500/10 hover:shadow-cyan-500/20"
@@ -228,6 +239,11 @@ export default function TemplatesPage() {
       {/* Brand onboarding modal */}
       {showBrandModal && (
         <BrandOnboardingModal onClose={() => setShowBrandModal(false)} />
+      )}
+
+      {/* Suggestion modal */}
+      {showSuggestModal && (
+        <SuggestionModal onClose={() => setShowSuggestModal(false)} />
       )}
     </div>
   );
