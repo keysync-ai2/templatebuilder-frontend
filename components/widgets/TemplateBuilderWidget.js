@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { loadTemplate } from '@/store/slices/emailBuilderSlice';
 
 export default function TemplateBuilderWidget({ data }) {
   const router = useRouter();
-  const { title, description, editor_link, template_id, html } = data;
+  const dispatch = useDispatch();
+  const { title, description, editor_link, template_id, html, template } = data;
   const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
@@ -16,36 +19,49 @@ export default function TemplateBuilderWidget({ data }) {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [showPreview]);
 
-  const handleOpenEditor = () => {
-    // Try editor_link first, then template_id
-    if (editor_link) {
+  const handleOpenEditor = async () => {
+    // Option 1: has editor_link/template_id — navigate directly
+    if (editor_link || template_id) {
       const id = template_id || editor_link.split('/editor/')[1];
       if (id) {
         router.push(`/editor/${id}`);
         return;
       }
     }
-    if (template_id) {
-      router.push(`/editor/${template_id}`);
+
+    // Option 2: has template component tree — save to API then open
+    if (template && template.components) {
+      try {
+        const { createTemplate } = await import('@/lib/api');
+        const result = await createTemplate(
+          template.templateName || title || 'Chat Template',
+          template.components,
+          template.templateSubject || '',
+        );
+        // Load into Redux so editor shows it immediately
+        dispatch(loadTemplate({
+          templateName: template.templateName || title,
+          templateSubject: template.templateSubject || '',
+          components: template.components,
+        }));
+        router.push(`/editor/${result.id}`);
+      } catch (err) {
+        console.error('Failed to save template:', err);
+      }
       return;
     }
-    // Fallback: save template via API then open editor
-    if (html) {
-      saveAndOpen();
-    }
-  };
 
-  const saveAndOpen = async () => {
+    // Option 3: nothing to work with — open blank editor
     try {
       const { createTemplate } = await import('@/lib/api');
-      const data = await createTemplate(title || 'Chat Template', []);
-      router.push(`/editor/${data.id}`);
+      const result = await createTemplate(title || 'Chat Template', []);
+      router.push(`/editor/${result.id}`);
     } catch (err) {
-      console.error('Failed to save template:', err);
+      console.error('Failed to create template:', err);
     }
   };
 
-  const hasEditor = editor_link || template_id || html;
+  const hasEditor = editor_link || template_id || template || html;
 
   return (
     <>
