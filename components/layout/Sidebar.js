@@ -1,11 +1,12 @@
 'use client';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { createConversation, setCurrentConversation, deleteConversation } from '@/store/slices/chatSlice';
+import { createConversation, setCurrentConversation, deleteConversation, setMessages } from '@/store/slices/chatSlice';
+import * as api from '@/lib/api';
 
 export default function Sidebar() {
   const dispatch = useDispatch();
-  const { conversations, currentConversationId } = useSelector((state) => state.chat);
+  const { conversations, currentConversationId, messages } = useSelector((state) => state.chat);
   const { leftPanelOpen } = useSelector((state) => state.ui);
 
   const handleNewChat = () => {
@@ -15,15 +16,62 @@ export default function Sidebar() {
     }));
   };
 
-  const handleSelectConversation = (id) => {
+  const handleSelectConversation = async (id) => {
     dispatch(setCurrentConversation(id));
+
+    // Load messages from API if we haven't already and this is a backend conversation
+    const conv = conversations.find(c => c.id === id);
+    const existingMessages = messages[id] || [];
+    if (conv?.backendId && existingMessages.length === 0) {
+      try {
+        const data = await api.getConversation(conv.backendId);
+        const apiMessages = (data.messages || []).map((m, i) => {
+          if (m.role === 'user') {
+            return {
+              id: `api-${m.id || i}`,
+              role: 'user',
+              text: m.content,
+              timestamp: m.created_at || new Date().toISOString(),
+            };
+          }
+          // Assistant: build widgets array with text + any tool widgets
+          const widgets = [];
+          if (m.content) {
+            widgets.push({ type: 'paragraph', data: { text: m.content } });
+          }
+          if (m.widgets && m.widgets.length > 0) {
+            widgets.push(...m.widgets);
+          }
+          return {
+            id: `api-${m.id || i}`,
+            role: 'assistant',
+            widgets: widgets.length > 0 ? widgets : [{ type: 'paragraph', data: { text: '(No response)' } }],
+            timestamp: m.created_at || new Date().toISOString(),
+          };
+        });
+        if (apiMessages.length > 0) {
+          dispatch(setMessages({ conversationId: id, messages: apiMessages }));
+        }
+      } catch (err) {
+        console.error('Failed to load conversation messages:', err);
+      }
+    }
   };
 
-  const handleDeleteConversation = (e, id) => {
+  const handleDeleteConversation = async (e, id) => {
     e.stopPropagation();
-    if (confirm('Delete this conversation?')) {
-      dispatch(deleteConversation(id));
+    if (!confirm('Delete this conversation?')) return;
+
+    // Delete from backend if it has a backend ID
+    const conv = conversations.find(c => c.id === id);
+    if (conv?.backendId) {
+      try {
+        await api.deleteConversation(conv.backendId);
+      } catch (err) {
+        console.error('Failed to delete conversation:', err);
+      }
     }
+    dispatch(deleteConversation(id));
   };
 
   if (!leftPanelOpen) return null;
