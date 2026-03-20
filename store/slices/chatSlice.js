@@ -61,20 +61,38 @@ export const chatSlice = createSlice({
       state.messages[conversationId] = messages;
     },
 
-    // Load conversations from API
+    // Load conversations from API — merge with existing, no duplicates
     setConversations: (state, action) => {
       const apiConversations = action.payload;
+
+      // Build set of all known backend IDs
+      const knownBackendIds = new Set();
+      for (const conv of state.conversations) {
+        if (conv.backendId) knownBackendIds.add(conv.backendId);
+      }
+      for (const [, backendId] of Object.entries(state.backendConversationIds)) {
+        knownBackendIds.add(backendId);
+      }
+
       for (const conv of apiConversations) {
-        // Don't add duplicates
-        if (!state.conversations.find(c => c.backendId === conv.id || c.id === conv.id)) {
-          state.conversations.push({
-            id: conv.id,
-            title: conv.title || 'Chat',
-            timestamp: conv.created_at || conv.updated_at || new Date().toISOString(),
-            backendId: conv.id,
-          });
-          state.backendConversationIds[conv.id] = conv.id;
+        if (knownBackendIds.has(conv.id)) {
+          // Already exists — update title if it changed
+          const existing = state.conversations.find(c => c.backendId === conv.id);
+          if (existing && conv.title && conv.title !== 'New Chat') {
+            existing.title = conv.title;
+          }
+          continue;
         }
+
+        // New conversation from API
+        state.conversations.push({
+          id: conv.id,
+          title: conv.title || 'Chat',
+          timestamp: conv.created_at || conv.updated_at || new Date().toISOString(),
+          backendId: conv.id,
+        });
+        state.backendConversationIds[conv.id] = conv.id;
+        knownBackendIds.add(conv.id);
       }
     },
 
