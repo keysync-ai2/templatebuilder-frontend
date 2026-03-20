@@ -161,7 +161,7 @@ export default function BottomPanel() {
       {/* Preview Modal */}
       {showPreview && (
         <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)' }}>
-          <div className="bg-[#0a0f1a] rounded-2xl border border-gray-700/50 shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col animate-fade-in-up" style={{ animationDuration: '0.2s' }}>
+          <div className="bg-[#0a0f1a] rounded-2xl border border-gray-700/50 shadow-2xl w-full max-w-[95vw] sm:max-w-4xl max-h-[90vh] flex flex-col animate-fade-in-up" style={{ animationDuration: '0.2s' }}>
             {/* Modal header */}
             <div className="flex items-center justify-between px-5 py-3 border-b border-gray-700/50 shrink-0">
               <div className="flex items-center gap-4">

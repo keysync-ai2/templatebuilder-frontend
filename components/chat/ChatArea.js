@@ -177,7 +177,7 @@ export default function ChatArea({ onSendPrompt }) {
               </div>
             )}
 
-            <div className={`max-w-2xl ${message.role === 'user' ? 'w-auto' : 'flex-1'}`}>
+            <div className={`max-w-[85vw] sm:max-w-2xl ${message.role === 'user' ? 'w-auto' : 'flex-1'} min-w-0`}>
               {message.role === 'user' ? (
                 <div className="bg-gradient-to-r from-cyan-600/90 to-blue-600/90 text-white rounded-2xl rounded-tr-md px-4 py-3 shadow-lg shadow-cyan-500/5">
                   <p className="whitespace-pre-wrap text-sm leading-relaxed">{message.text}</p>

@@ -98,7 +98,7 @@ export default function BrandPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#030712] text-white flex flex-col noise">
+    <div className="min-h-screen bg-[#030712] text-white flex flex-col noise page-scroll">
       <Header />
 
       <div className="flex-1 overflow-auto">

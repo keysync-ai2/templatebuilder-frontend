@@ -56,11 +56,11 @@ export default function SuggestionCardsWidget({ data }) {
         </div>
 
         {/* Horizontal scrollable cards */}
-        <div className="flex gap-3 px-4 pb-4 overflow-x-auto" style={{ scrollSnapType: 'x mandatory' }}>
+        <div className="flex gap-3 px-4 pb-4 overflow-x-auto" style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}>
           {suggestions.map((s, idx) => (
             <div
               key={s.slug}
-              className="shrink-0 w-64 bg-gray-900/50 border border-gray-700/50 rounded-xl overflow-hidden hover:border-cyan-500/30 transition-all"
+              className="shrink-0 w-[70vw] sm:w-64 bg-gray-900/50 border border-gray-700/50 rounded-xl overflow-hidden hover:border-cyan-500/30 transition-all"
               style={{ scrollSnapAlign: 'start' }}
             >
               {/* Score + badges */}
@@ -125,7 +125,7 @@ export default function SuggestionCardsWidget({ data }) {
 
         return (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)' }} onClick={() => setPreviewSlug(null)}>
-            <div className="bg-[#0a0f1a] rounded-2xl border border-gray-700/50 shadow-2xl w-full max-w-3xl max-h-[85vh] flex flex-col animate-fade-in-up" style={{ animationDuration: '0.2s' }} onClick={e => e.stopPropagation()}>
+            <div className="bg-[#0a0f1a] rounded-2xl border border-gray-700/50 shadow-2xl w-full max-w-[95vw] sm:max-w-3xl max-h-[85vh] flex flex-col animate-fade-in-up" style={{ animationDuration: '0.2s' }} onClick={e => e.stopPropagation()}>
               <div className="flex items-center justify-between px-5 py-3 border-b border-gray-700/50 shrink-0">
                 <span className="text-sm font-medium text-gray-200">{s.name}</span>
                 <div className="flex gap-2">
@@ -141,7 +141,7 @@ export default function SuggestionCardsWidget({ data }) {
                 </div>
               </div>
               <div className="flex-1 overflow-auto bg-gray-200 flex justify-center p-6">
-                <div style={{ width: '600px' }}>
+                <div style={{ width: '100%', maxWidth: '600px' }}>
                   <iframe srcDoc={previewHtml} className="w-full bg-white shadow-xl rounded-lg" style={{ minHeight: '600px', border: 'none' }} title="Preview" />
                 </div>
               </div>
