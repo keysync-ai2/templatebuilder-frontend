@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/layout/Header';
@@ -19,6 +19,12 @@ export default function ChatPage() {
   const router = useRouter();
   const { currentConversationId, conversations, backendConversationIds } = useSelector((state) => state.chat);
   const { user, initialized } = useSelector((state) => state.auth);
+
+  // Keep a ref to always have the latest backend IDs (avoids stale closures)
+  const backendIdsRef = useRef(backendConversationIds);
+  useEffect(() => {
+    backendIdsRef.current = backendConversationIds;
+  }, [backendConversationIds]);
 
   useEffect(() => {
     const token = api.getAccessToken();
@@ -68,8 +74,8 @@ export default function ChatPage() {
     dispatch(setLoading(true));
 
     try {
-      // Get the backend conversation ID if we have one
-      const backendConvId = backendConversationIds[currentConversationId] || null;
+      // Get the backend conversation ID — use ref to avoid stale closure
+      const backendConvId = backendIdsRef.current[currentConversationId] || null;
 
       const result = await api.sendChatMessage(messageData.text, backendConvId);
 
