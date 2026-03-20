@@ -6,6 +6,7 @@ import BulletsWidget from './BulletsWidget';
 import ImageWidget from './ImageWidget';
 import FormWidget from './FormWidget';
 import TemplateBuilderWidget from './TemplateBuilderWidget';
+import SuggestionCardsWidget from './SuggestionCardsWidget';
 
 export default function WidgetRenderer({ widget, onFormSubmit, onImageExpand }) {
   const { type, data } = widget;
@@ -30,6 +31,9 @@ export default function WidgetRenderer({ widget, onFormSubmit, onImageExpand }) 
     case 'template-builder':
     case 'email_preview':
       return <TemplateBuilderWidget data={data} onExpand={onImageExpand} />;
+
+    case 'suggestion-cards':
+      return <SuggestionCardsWidget data={data} />;
 
     default:
       return (
