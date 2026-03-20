@@ -17,6 +17,7 @@ export default function TemplateBuilderWidget({ data }) {
   }, [showPreview]);
 
   const handleOpenEditor = () => {
+    // Try editor_link first, then template_id
     if (editor_link) {
       const id = template_id || editor_link.split('/editor/')[1];
       if (id) {
@@ -24,7 +25,27 @@ export default function TemplateBuilderWidget({ data }) {
         return;
       }
     }
+    if (template_id) {
+      router.push(`/editor/${template_id}`);
+      return;
+    }
+    // Fallback: save template via API then open editor
+    if (html) {
+      saveAndOpen();
+    }
   };
+
+  const saveAndOpen = async () => {
+    try {
+      const { createTemplate } = await import('@/lib/api');
+      const data = await createTemplate(title || 'Chat Template', []);
+      router.push(`/editor/${data.id}`);
+    } catch (err) {
+      console.error('Failed to save template:', err);
+    }
+  };
+
+  const hasEditor = editor_link || template_id || html;
 
   return (
     <>
@@ -57,7 +78,7 @@ export default function TemplateBuilderWidget({ data }) {
                 Preview
               </button>
             )}
-            {editor_link && (
+            {hasEditor && (
               <button
                 onClick={handleOpenEditor}
                 className="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl text-xs font-medium transition-all btn-shine shadow-md shadow-cyan-500/10"
