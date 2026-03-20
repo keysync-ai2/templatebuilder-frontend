@@ -137,7 +137,7 @@ export default function ChatPage() {
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
         <div className="flex-1 flex flex-col overflow-hidden relative">
-          <ChatArea />
+          <ChatArea onSendPrompt={(text) => handleSendMessage({ text, attachments: [] })} />
           <ChatInput onSend={handleSendMessage} />
         </div>
       </div>

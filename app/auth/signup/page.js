@@ -19,7 +19,7 @@ export default function SignupPage() {
     e.preventDefault();
     const result = await dispatch(signupUser({ email, password, name }));
     if (result.meta.requestStatus === 'fulfilled') {
-      router.push('/templates');
+      router.push('/chat');
     }
   };
 

@@ -18,7 +18,7 @@ export default function LoginPage() {
     e.preventDefault();
     const result = await dispatch(loginUser({ email, password }));
     if (result.meta.requestStatus === 'fulfilled') {
-      router.push('/templates');
+      router.push('/chat');
     }
   };
 

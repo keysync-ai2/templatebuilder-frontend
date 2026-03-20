@@ -10,7 +10,7 @@ export default function Home() {
   useEffect(() => {
     const token = getAccessToken();
     if (token) {
-      router.replace('/templates');
+      router.replace('/chat');
     } else {
       router.replace('/auth/login');
     }
