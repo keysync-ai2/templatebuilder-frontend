@@ -53,10 +53,10 @@ export default function ParagraphWidget({ data }) {
               <tr className="border-b border-gray-800/50 last:border-0">{children}</tr>
             ),
             th: ({ children }) => (
-              <th className="px-3 py-2 text-left font-semibold text-gray-300 whitespace-normal">{children}</th>
+              <th className="px-3 py-2 text-left font-semibold text-gray-300 whitespace-nowrap">{children}</th>
             ),
             td: ({ children }) => (
-              <td className="px-3 py-2 text-gray-400 whitespace-normal">{children}</td>
+              <td className="px-3 py-2 text-gray-400 whitespace-nowrap">{children}</td>
             ),
           }}
         >
