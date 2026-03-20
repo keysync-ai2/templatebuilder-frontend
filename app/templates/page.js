@@ -4,17 +4,21 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { fetchMe } from '@/store/slices/authSlice';
+import { fetchBrand } from '@/store/slices/brandSlice';
 import { loadTemplate } from '@/store/slices/emailBuilderSlice';
 import Header from '@/components/layout/Header';
+import BrandOnboardingModal from '@/components/brand/BrandOnboardingModal';
 import * as api from '@/lib/api';
 
 export default function TemplatesPage() {
   const dispatch = useDispatch();
   const router = useRouter();
   const { user, initialized } = useSelector((state) => state.auth);
+  const { hasProfile, initialized: brandInit } = useSelector((state) => state.brand);
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(null);
+  const [showBrandModal, setShowBrandModal] = useState(false);
 
   useEffect(() => {
     const token = api.getAccessToken();
@@ -30,7 +34,15 @@ export default function TemplatesPage() {
   useEffect(() => {
     if (!user) return;
     loadTemplates();
+    dispatch(fetchBrand());
   }, [user]);
+
+  // Show onboarding if no brand profile
+  useEffect(() => {
+    if (brandInit && !hasProfile && user) {
+      setShowBrandModal(true);
+    }
+  }, [brandInit, hasProfile, user]);
 
   async function loadTemplates() {
     try {
@@ -212,6 +224,11 @@ export default function TemplatesPage() {
           )}
         </div>
       </div>
+
+      {/* Brand onboarding modal */}
+      {showBrandModal && (
+        <BrandOnboardingModal onClose={() => setShowBrandModal(false)} />
+      )}
     </div>
   );
 }
