@@ -84,6 +84,8 @@ html, body {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(51, 65, 85, 0.5);
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 /* Glow input focus */

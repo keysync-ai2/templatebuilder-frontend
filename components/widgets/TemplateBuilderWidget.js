@@ -65,7 +65,7 @@ export default function TemplateBuilderWidget({ data }) {
 
   return (
     <>
-      <div className="glass rounded-2xl rounded-tl-md overflow-hidden">
+      <div className="glass rounded-2xl rounded-tl-md overflow-hidden max-w-full">
         {/* Card content */}
         <div className="p-4">
           <div className="flex items-start gap-3">

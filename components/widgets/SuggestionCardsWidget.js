@@ -44,7 +44,7 @@ export default function SuggestionCardsWidget({ data }) {
 
   return (
     <>
-      <div className="glass rounded-2xl rounded-tl-md overflow-hidden">
+      <div className="glass rounded-2xl rounded-tl-md overflow-hidden max-w-full">
         <div className="p-4 pb-2">
           <div className="flex items-center gap-2 mb-1">
             <svg className="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -160,8 +160,8 @@ export default function ChatArea({ onSendPrompt }) {
 
   // ─── Chat Messages ───
   return (
-    <div className="flex-1 overflow-y-auto p-3 sm:p-6">
-      <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
+    <div className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-6">
+      <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6 overflow-hidden">
         {currentMessages.map((message) => (
           <div
             key={message.id}
