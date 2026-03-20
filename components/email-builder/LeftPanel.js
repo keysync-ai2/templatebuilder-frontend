@@ -119,39 +119,224 @@ const CATEGORY_CONFIG = {
 
 const CATEGORIES = ['all', 'hero', 'product', 'cta', 'content', 'footer'];
 
-// ─── Preset icon mapping ───
-const PRESET_ICONS = {
-  'hero-bold': faBullhorn,
-  'hero-image': faPhotoFilm,
-  'hero-minimal': faStar,
-  'product-2col': faTableCells,
-  'product-3col': faTableCells,
-  'product-featured': faAward,
-  'cta-single': faHandPointer,
-  'cta-dual': faObjectGroup,
-  'content-text-image': faImage,
-  'content-testimonial': faQuoteLeft,
-  'content-stats': faChartSimple,
-  'content-checklist': faListCheck,
-  'footer-simple': faAlignCenter,
-  'footer-social': faShareNodes,
-  'coupon-banner': faTicket,
-  'countdown-urgency': faClock,
-};
+// ─── Skeleton block previews — mini wireframes showing layout structure ───
+function SkeletonPreview({ presetId, category }) {
+  const bg = {
+    hero: 'bg-blue-50',
+    product: 'bg-amber-50',
+    cta: 'bg-indigo-50',
+    content: 'bg-emerald-50',
+    footer: 'bg-slate-50',
+  }[category] || 'bg-gray-50';
+
+  const accent = {
+    hero: 'bg-blue-300',
+    product: 'bg-amber-300',
+    cta: 'bg-indigo-300',
+    content: 'bg-emerald-300',
+    footer: 'bg-slate-300',
+  }[category] || 'bg-gray-300';
+
+  const accentDark = {
+    hero: 'bg-blue-400',
+    product: 'bg-amber-400',
+    cta: 'bg-indigo-400',
+    content: 'bg-emerald-400',
+    footer: 'bg-slate-400',
+  }[category] || 'bg-gray-400';
+
+  const skeletons = {
+    'hero-bold': (
+      <div className={`${bg} p-3 space-y-1.5`}>
+        <div className={`h-3.5 ${accentDark} rounded-sm w-3/4 mx-auto`} />
+        <div className={`h-1.5 ${accent} rounded-sm w-1/2 mx-auto opacity-60`} />
+        <div className="h-1 rounded-sm w-full opacity-0" />
+        <div className="h-5 bg-white rounded-md w-2/5 mx-auto shadow-sm" />
+      </div>
+    ),
+    'hero-image': (
+      <div className={`${bg} p-2 space-y-1.5`}>
+        <div className="h-7 bg-gray-200 rounded-md flex items-center justify-center">
+          <FontAwesomeIcon icon={faImage} className="text-gray-300 text-xs" />
+        </div>
+        <div className={`h-3 ${accentDark} rounded-sm w-3/4 mx-auto`} />
+        <div className={`h-1.5 ${accent} rounded-sm w-1/2 mx-auto opacity-60`} />
+        <div className={`h-4 ${accentDark} rounded-md w-1/3 mx-auto`} />
+      </div>
+    ),
+    'hero-minimal': (
+      <div className={`${bg} p-4 space-y-2`}>
+        <div className={`h-2.5 ${accentDark} rounded-sm w-1/2 mx-auto`} />
+        <div className={`h-1.5 ${accent} rounded-sm w-3/4 mx-auto opacity-50`} />
+        <div className={`h-1.5 ${accent} rounded-sm w-2/3 mx-auto opacity-30`} />
+      </div>
+    ),
+    'product-2col': (
+      <div className={`${bg} p-2 flex gap-2`}>
+        {[0, 1].map(i => (
+          <div key={i} className="flex-1 bg-white rounded-md p-1.5 shadow-sm space-y-1">
+            <div className="h-5 bg-gray-100 rounded-sm" />
+            <div className={`h-1.5 ${accentDark} rounded-sm w-3/4`} />
+            <div className={`h-1.5 ${accent} rounded-sm w-1/2 opacity-60`} />
+            <div className={`h-3 ${accentDark} rounded-sm w-4/5 mx-auto`} />
+          </div>
+        ))}
+      </div>
+    ),
+    'product-3col': (
+      <div className={`${bg} p-2 flex gap-1.5`}>
+        {[0, 1, 2].map(i => (
+          <div key={i} className="flex-1 bg-white rounded-md p-1 shadow-sm space-y-0.5">
+            <div className="h-4 bg-gray-100 rounded-sm" />
+            <div className={`h-1 ${accentDark} rounded-sm w-3/4`} />
+            <div className={`h-1 ${accent} rounded-sm w-1/2 opacity-60`} />
+          </div>
+        ))}
+      </div>
+    ),
+    'product-featured': (
+      <div className={`${bg} p-2 flex gap-2`}>
+        <div className="flex-1 bg-gray-100 rounded-md flex items-center justify-center">
+          <FontAwesomeIcon icon={faImage} className="text-gray-300 text-sm" />
+        </div>
+        <div className="flex-1 space-y-1.5 py-1">
+          <div className={`h-2 ${accentDark} rounded-sm w-3/4`} />
+          <div className={`h-1 ${accent} rounded-sm w-full opacity-50`} />
+          <div className={`h-1 ${accent} rounded-sm w-5/6 opacity-50`} />
+          <div className={`h-2 ${accentDark} rounded-sm w-1/3`} />
+          <div className={`h-3.5 ${accentDark} rounded-sm w-2/3`} />
+        </div>
+      </div>
+    ),
+    'cta-single': (
+      <div className={`${bg} p-3 space-y-1.5`}>
+        <div className={`h-2.5 ${accentDark} rounded-sm w-2/3 mx-auto`} />
+        <div className={`h-1.5 ${accent} rounded-sm w-4/5 mx-auto opacity-50`} />
+        <div className="h-1 opacity-0" />
+        <div className={`h-5 ${accentDark} rounded-md w-2/5 mx-auto`} />
+      </div>
+    ),
+    'cta-dual': (
+      <div className={`${bg} p-3 space-y-1.5`}>
+        <div className={`h-2.5 ${accentDark} rounded-sm w-2/3 mx-auto`} />
+        <div className={`h-1.5 ${accent} rounded-sm w-1/2 mx-auto opacity-50`} />
+        <div className="h-1 opacity-0" />
+        <div className="flex gap-2 justify-center">
+          <div className={`h-4 ${accentDark} rounded-md w-1/4`} />
+          <div className="h-4 bg-white border border-gray-300 rounded-md w-1/4" />
+        </div>
+      </div>
+    ),
+    'content-text-image': (
+      <div className={`${bg} p-2 flex gap-2`}>
+        <div className="flex-1 space-y-1.5 py-1">
+          <div className={`h-2 ${accentDark} rounded-sm w-4/5`} />
+          <div className={`h-1 ${accent} rounded-sm w-full opacity-50`} />
+          <div className={`h-1 ${accent} rounded-sm w-5/6 opacity-50`} />
+          <div className={`h-1 ${accent} rounded-sm w-3/4 opacity-30`} />
+        </div>
+        <div className="flex-1 bg-gray-100 rounded-md flex items-center justify-center">
+          <FontAwesomeIcon icon={faImage} className="text-gray-300 text-sm" />
+        </div>
+      </div>
+    ),
+    'content-testimonial': (
+      <div className={`${bg} p-3 space-y-2`}>
+        <div className={`border-l-3 border-l-2 ${accent.replace('bg-', 'border-')} pl-2.5 space-y-1`}>
+          <div className="h-1.5 bg-gray-300 rounded-sm w-full opacity-60" />
+          <div className="h-1.5 bg-gray-300 rounded-sm w-5/6 opacity-60" />
+          <div className="h-1.5 bg-gray-300 rounded-sm w-2/3 opacity-40" />
+        </div>
+        <div className="flex items-center gap-2 pl-1">
+          <div className="w-4 h-4 bg-gray-200 rounded-full shrink-0" />
+          <div className="space-y-0.5">
+            <div className={`h-1.5 ${accentDark} rounded-sm w-12`} />
+            <div className="h-1 bg-gray-200 rounded-sm w-16" />
+          </div>
+        </div>
+      </div>
+    ),
+    'content-stats': (
+      <div className={`${bg} p-2.5 flex gap-2`}>
+        {['99%', '10K+', '24/7'].map((val, i) => (
+          <div key={i} className="flex-1 text-center space-y-0.5">
+            <div className={`text-[10px] font-bold ${accentDark.replace('bg-', 'text-')}`}>{val}</div>
+            <div className="h-1 bg-gray-300 rounded-sm w-4/5 mx-auto opacity-50" />
+          </div>
+        ))}
+      </div>
+    ),
+    'content-checklist': (
+      <div className={`${bg} p-2.5 space-y-1.5`}>
+        <div className={`h-2 ${accentDark} rounded-sm w-1/2`} />
+        {[0, 1, 2, 3].map(i => (
+          <div key={i} className="flex items-center gap-1.5">
+            <div className="w-2.5 h-2.5 bg-green-400 rounded-sm shrink-0 flex items-center justify-center">
+              <span className="text-white text-[6px] font-bold">✓</span>
+            </div>
+            <div className="h-1 bg-gray-300 rounded-sm flex-1 opacity-50" style={{ width: `${70 + i * 5}%` }} />
+          </div>
+        ))}
+      </div>
+    ),
+    'footer-simple': (
+      <div className={`${bg} p-2.5 space-y-1.5`}>
+        <div className="h-px bg-gray-300 opacity-60" />
+        <div className={`h-1.5 ${accentDark} rounded-sm w-1/3 mx-auto`} />
+        <div className="h-1 bg-gray-300 rounded-sm w-2/3 mx-auto opacity-40" />
+        <div className="h-1 bg-blue-300 rounded-sm w-1/4 mx-auto opacity-60" />
+      </div>
+    ),
+    'footer-social': (
+      <div className={`${bg} p-2.5 space-y-1.5`}>
+        <div className="flex gap-1.5 justify-center">
+          {[0, 1, 2].map(i => (
+            <div key={i} className="w-4 h-4 bg-gray-200 rounded-full" />
+          ))}
+        </div>
+        <div className="h-px bg-gray-300 opacity-60" />
+        <div className={`h-1.5 ${accentDark} rounded-sm w-1/3 mx-auto`} />
+        <div className="h-1 bg-gray-300 rounded-sm w-1/2 mx-auto opacity-40" />
+      </div>
+    ),
+    'coupon-banner': (
+      <div className={`${bg} p-2.5 space-y-1.5`}>
+        <div className={`h-2 ${accentDark} rounded-sm w-1/2 mx-auto`} />
+        <div className="h-5 border-2 border-dashed border-gray-400 rounded-md flex items-center justify-center mx-2">
+          <span className="text-[8px] font-mono font-bold text-gray-500 tracking-widest">CODE</span>
+        </div>
+        <div className="h-1 bg-gray-300 rounded-sm w-2/5 mx-auto opacity-50" />
+        <div className={`h-4 ${accentDark} rounded-md w-1/3 mx-auto`} />
+      </div>
+    ),
+    'countdown-urgency': (
+      <div className="bg-red-50 p-3 space-y-1.5">
+        <div className="h-3 bg-red-400 rounded-sm w-2/3 mx-auto" />
+        <div className="h-1.5 bg-red-200 rounded-sm w-4/5 mx-auto opacity-60" />
+        <div className="h-1 opacity-0" />
+        <div className="h-5 bg-red-500 rounded-md w-2/5 mx-auto" />
+      </div>
+    ),
+  };
+
+  return skeletons[presetId] || (
+    <div className={`${bg} p-3 space-y-1.5`}>
+      <div className="h-2.5 bg-gray-300 rounded-sm w-3/4 mx-auto" />
+      <div className="h-1.5 bg-gray-200 rounded-sm w-1/2 mx-auto" />
+    </div>
+  );
+}
 
 // ─── Preset Card ───
 function PresetCard({ preset, onInsert }) {
-  const icon = PRESET_ICONS[preset.preset_id] || faSquare;
-  const catConfig = CATEGORY_CONFIG[preset.category] || { color: 'text-gray-500', bg: 'bg-gray-50' };
-
   return (
     <div
       onClick={() => onInsert(preset)}
       className="bg-white border border-gray-200 rounded-xl overflow-hidden cursor-pointer hover:border-blue-400 hover:shadow-md transition-all group"
     >
-      {/* Icon preview */}
-      <div className={`${catConfig.bg} border-b border-gray-100 py-4 flex items-center justify-center`}>
-        <FontAwesomeIcon icon={icon} className={`text-2xl ${catConfig.color} opacity-60 group-hover:opacity-100 transition-opacity`} />
+      {/* Skeleton preview */}
+      <div className="border-b border-gray-100">
+        <SkeletonPreview presetId={preset.preset_id} category={preset.category} />
       </div>
 
       {/* Info */}
