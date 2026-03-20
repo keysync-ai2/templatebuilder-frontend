@@ -28,6 +28,7 @@ export default function WidgetRenderer({ widget, onFormSubmit, onImageExpand }) 
       return <FormWidget data={data} onSubmit={onFormSubmit} />;
 
     case 'template-builder':
+    case 'email_preview':
       return <TemplateBuilderWidget data={data} onExpand={onImageExpand} />;
 
     default:
