@@ -105,6 +105,11 @@ export default function ChatPage() {
         for (const w of result.widgets) widgets.push(w);
       }
 
+      // Check if needs permission (large response)
+      if (result.needs_permission) {
+        pendingTaskRef.current = { taskId: result.task_id, docId: result.pending_doc_id };
+      }
+
       dispatch(addMessage({
         conversationId: currentConversationId,
         message: { role: 'assistant', widgets },
@@ -122,6 +127,61 @@ export default function ChatPage() {
       }));
     } finally {
       dispatch(setLoading(false));
+    }
+  };
+
+  const pendingTaskRef = useRef(null);
+
+  const handlePermissionChoice = async (docId, choice) => {
+    const pending = pendingTaskRef.current;
+    if (!pending) return;
+
+    dispatch(setLoading(true));
+    try {
+      await api.sendPermissionChoice(pending.taskId, docId, choice);
+
+      // Resume polling for the same task
+      const maxAttempts = 100;
+      for (let i = 0; i < maxAttempts; i++) {
+        await new Promise(r => setTimeout(r, 2000));
+        const status = await api.apiFetch(`/api/chat/status/${pending.taskId}`);
+
+        if (status.status_message && typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('chat-status', {
+            detail: { message: status.status_message },
+          }));
+        }
+
+        if (status.status === 'completed') {
+          const widgets = [];
+          if (status.message) {
+            widgets.push({ type: 'paragraph', data: { text: status.message } });
+          }
+          if (status.widgets) {
+            for (const w of status.widgets) widgets.push(w);
+          }
+          dispatch(addMessage({
+            conversationId: currentConversationId,
+            message: { role: 'assistant', widgets },
+          }));
+          break;
+        }
+        if (status.status === 'failed') {
+          dispatch(addMessage({
+            conversationId: currentConversationId,
+            message: { role: 'assistant', widgets: [{ type: 'paragraph', data: { text: `Failed: ${status.error}` } }] },
+          }));
+          break;
+        }
+      }
+    } catch (err) {
+      dispatch(addMessage({
+        conversationId: currentConversationId,
+        message: { role: 'assistant', widgets: [{ type: 'paragraph', data: { text: `Permission handling failed: ${err.message}` } }] },
+      }));
+    } finally {
+      dispatch(setLoading(false));
+      pendingTaskRef.current = null;
     }
   };
 
@@ -214,7 +274,7 @@ export default function ChatPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
-          <ChatArea onSendPrompt={(text) => handleSendMessage({ text, attachments: [] })} />
+          <ChatArea onSendPrompt={(text) => handleSendMessage({ text, attachments: [] })} onPermissionChoice={handlePermissionChoice} />
           <ChatInput onSend={handleSendMessage} onSlashCommand={handleSlashCommand} />
         </div>
       </div>

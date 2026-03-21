@@ -7,8 +7,9 @@ import ImageWidget from './ImageWidget';
 import FormWidget from './FormWidget';
 import TemplateBuilderWidget from './TemplateBuilderWidget';
 import SuggestionCardsWidget from './SuggestionCardsWidget';
+import PermissionWidget from './PermissionWidget';
 
-export default function WidgetRenderer({ widget, onFormSubmit, onImageExpand }) {
+export default function WidgetRenderer({ widget, onFormSubmit, onImageExpand, onPermissionChoice }) {
   const { type, data } = widget;
 
   switch (type) {
@@ -34,6 +35,9 @@ export default function WidgetRenderer({ widget, onFormSubmit, onImageExpand }) 
 
     case 'suggestion-cards':
       return <SuggestionCardsWidget data={data} />;
+
+    case 'permission-request':
+      return <PermissionWidget data={data} onChoice={onPermissionChoice} />;
 
     default:
       return (

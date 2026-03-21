@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import WidgetRenderer from '../widgets/WidgetRenderer';
 import { setRightPanel } from '@/store/slices/uiSlice';
 
-export default function ChatArea({ onSendPrompt }) {
+export default function ChatArea({ onSendPrompt, onPermissionChoice }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const { currentConversationId, messages, isLoading } = useSelector((state) => state.chat);
@@ -203,6 +203,7 @@ export default function ChatArea({ onSendPrompt }) {
                         widget={widget}
                         onFormSubmit={handleFormSubmit}
                         onImageExpand={handleImageExpand}
+                        onPermissionChoice={onPermissionChoice}
                       />
                     ))
                   ) : (
