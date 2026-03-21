@@ -144,7 +144,7 @@ export default function ChatPage() {
       const maxAttempts = 100;
       for (let i = 0; i < maxAttempts; i++) {
         await new Promise(r => setTimeout(r, 2000));
-        const status = await api.apiFetch(`/api/chat/status/${pending.taskId}`);
+        const status = await api.pollTaskStatus(pending.taskId);
 
         if (status.status_message && typeof window !== 'undefined') {
           window.dispatchEvent(new CustomEvent('chat-status', {
