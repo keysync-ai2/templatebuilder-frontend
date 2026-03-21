@@ -157,7 +157,7 @@ export default function EditorPage() {
   }
 
   return (
-    <div className="h-screen bg-gray-950 flex flex-col">
+    <div className="app-shell bg-gray-950 flex flex-col">
       {/* Editor toolbar */}
       <div className="flex items-center justify-between px-4 py-2 bg-gray-900 border-b border-gray-800">
         <div className="flex items-center gap-3">

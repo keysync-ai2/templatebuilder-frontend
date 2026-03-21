@@ -192,14 +192,14 @@ export default function ChatPage() {
 
   if (!initialized || !user) {
     return (
-      <div className="flex items-center justify-center h-screen bg-[#030712]">
+      <div className="flex items-center justify-center app-shell bg-[#030712]">
         <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col h-screen bg-[#030712] noise">
+    <div className="flex flex-col app-shell bg-[#030712] noise">
       <Header />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />

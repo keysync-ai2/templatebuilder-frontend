@@ -103,7 +103,7 @@ export default function TemplatesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#030712] text-white flex flex-col noise page-scroll">
+    <div className="bg-[#030712] text-white flex flex-col noise page-scroll">
       <Header />
 
       <div className="flex-1 overflow-auto">
