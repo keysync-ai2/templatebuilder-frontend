@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import * as api from '@/lib/api';
+import TokenUsage from '@/components/chat/TokenUsage';
 
 export default function Header() {
   const router = useRouter();
@@ -87,8 +88,11 @@ export default function Header() {
         </nav>
       </div>
 
-      {/* Right: Profile */}
-      <div className="flex items-center" ref={profileRef}>
+      {/* Right: Token usage + Profile */}
+      <div className="flex items-center gap-3" ref={profileRef}>
+        <div className="hidden sm:block">
+          <TokenUsage />
+        </div>
         <div className="relative">
           <button
             onClick={() => setShowProfile(!showProfile)}
